@@ -1,0 +1,586 @@
+.update_movie_heading_subtitle {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--gold-dim); 
+    margin-top: 12px;
+    letter-spacing: 0.04em;
+}
+
+.admin_movie_content_wrapper {
+    margin: 2rem auto;
+    padding: 1rem 2.5rem;
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.admin_workspace_card {
+    background: var(--surface);
+    border: 1px solid var(--glass-border-md);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    margin-bottom: 2.5rem;
+}
+
+.admin_card_header {
+    border-bottom: 1px solid rgba(201, 168, 76, 0.4);
+    padding-bottom: 0.8rem;
+    margin-bottom: 3rem;
+}
+
+.admin_card_eyebrow {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.admin_card_heading {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 4vw, 42px); 
+    font-weight: 300;
+    color: var(--text);
+    font-style: italic;
+}
+
+.admin_card_heading em {
+    font-style: italic;
+    color: var(--gold-light);
+}
+
+.admin_workspace_form {
+    display: block;
+}
+
+.admin_form_layout_grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 4rem;
+}
+
+.admin_fields_entry_pane {
+    display: flex;
+    flex-direction: column;
+}
+
+.form_single_row {
+    margin-bottom: 2rem;
+}
+
+.form_single_row_spacer {
+    margin-top: 1.5rem;
+}
+
+.form_grid_3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.form_grid_2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.admin_field_group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.admin_field_label_av {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding-left: 3rem;
+}
+
+.admin_field_label {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+.form_row_spacer {
+    margin-top: 1.75rem;
+}
+
+.admin_fields_stacked_column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.structural_textarea_fill {
+    height: 100%;
+}
+
+.admin_form_textarea.execution_fill {
+    height: calc(100% - 25px);
+    min-height: 142px;
+}
+
+.admin_form_input,
+.admin_form_select,
+.admin_form_textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 0 16px;
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    font-weight: 300;
+    color: var(--text);
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+}
+
+.admin_form_input,
+.admin_form_select {
+    height: 46px;
+}
+
+.admin_form_select {
+    appearance: none;
+    background-position: calc(100% - 16px) center;
+    cursor: pointer;
+    padding-right: 40px;
+}
+
+.admin_form_textarea {
+    padding: 14px 16px;
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.6;
+}
+
+.admin_form_input::placeholder,
+.admin_form_textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.admin_form_input:focus,
+.admin_form_select:focus,
+.admin_form_textarea:focus {
+    border-color: var(--gold);
+    background: rgba(201, 168, 76, 0.05);
+}
+
+.admin_form_select option {
+    background-color: var(--obsidian);
+    color: var(--text);
+}
+
+.admin_avatar_upload_pane {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.admin_avatar_poster_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 0.4rem;
+}
+
+.admin_avatar_circle_frame {
+    display: block;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    border: 3px solid rgba(201, 168, 76, 0.25);
+    background: rgba(8, 10, 14, 0.5);
+    cursor: pointer;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+}
+
+.admin_avatar_circle_frame:hover {
+    border-color: var(--gold-light);
+    box-shadow: 0 12px 40px rgba(201, 168, 76, 0.1);
+    opacity: 0.7;
+}
+
+.admin_avatar_circle_frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.admin_avatar_circle_frame:hover img {
+    transform: scale(1.06);
+}
+
+.admin_avatar_hover_overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 10, 14, 0.78);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.admin_avatar_circle_frame:hover .admin_avatar_hover_overlay {
+    opacity: 1;
+}
+
+.admin_avatar_hover_overlay span {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.admin_hidden_file_input {
+    display: none;
+}
+
+.admin_schedule_matrix_block {
+    margin-bottom: 2rem;
+}
+
+.schedule_header_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 44px;
+    gap: 12px;
+    margin-bottom: 0.75rem;
+    padding: 0 12px;
+}
+
+.schedule_grid_header_title {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.schedule_add_row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 44px;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+}
+
+.schedule_add_row .admin_form_input,
+.schedule_add_row .admin_form_select {
+    height: 40px;
+    font-size: 13px;
+    padding: 0 12px;
+}
+
+.schedule_add_row .admin_form_select {
+    background-position: calc(100% - 12px) center;
+    padding-right: 32px;
+}
+
+.remove_button {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(198, 40, 40, 0.22);
+    background: rgba(198, 40, 40, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.remove_button:hover {
+    background: rgba(214, 40, 40, 0.16);
+    border-color: rgba(214, 40, 40, 0.4);
+}
+
+.add_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1.5px dashed rgba(201, 168, 76, 0.25);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.add_button:hover {
+    border-color: var(--gold);
+    background: rgba(201, 168, 76, 0.04);
+}
+
+.admin_button_icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.remove_button .admin_button_icon {
+    width: 14px;
+    height: 14px;
+    filter: brightness(0) invert(0.45);
+}
+
+.add_button .admin_button_icon {
+    filter: brightness(0) invert(0.45);
+}
+
+.admin_location_segment_wrapper {
+    border-top: 1px solid rgba(201, 168, 76, 0.4);
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.location_checkbox_flex_matrix {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.loc_check_label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    transition: all 0.22s ease;
+}
+
+.custom_location_checkbox {
+    accent-color: var(--gold);
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+    margin: 0;
+}
+
+.checkbox_label_text {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    font-style: italic;
+}
+
+.loc_check_label:hover {
+	background: rgba(201,168,76,0.10);
+    border-color: rgba(201,168,76,0.35);
+    box-shadow: 0 4px 18px rgba(201,168,76,0.16);
+}
+
+.loc_check_label:hover .checkbox_label_text {
+	color: var(--gold-light); 
+}
+
+.admin_workspace_form_footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+}
+
+.button_model_primary {
+    height: 46px;
+    padding: 0 30px;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--obsidian);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    box-shadow: 0 4px 20px rgba(201, 168, 76, 0.18);
+    transition: all 0.25s ease;
+}
+
+.button_model_primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(201, 168, 76, 0.28);
+}
+
+.button_model_primary:active {
+    transform: translateY(0);
+}
+
+.button_model_secondary {
+    height: 46px;
+    padding: 0 26px;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+}
+
+.button_model_secondary:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    border-color: var(--text-muted);
+}
+.admin_background_upload_wrapper {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.admin_background_frame {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 172px;
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px dashed rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.04);
+    transition: 0.25s ease;
+}
+
+.admin_background_frame:hover {
+    border-color: rgba(255,255,255,0.35);
+    transform: translateY(-2px);
+}
+
+.admin_background_preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.admin_background_overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.25s ease;
+}
+
+.admin_background_overlay span {
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+.admin_background_frame:hover .admin_background_overlay {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+
+  .admin_movie_content_wrapper {
+    padding: 1rem 4%;
+    margin: 1rem auto;
+  }
+ 
+  .admin_workspace_card {
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+  }
+ 
+  .admin_form_layout_grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+ 
+  .admin_avatar_poster_wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+  }
+ 
+  .form_grid_3 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+ 
+  .form_grid_2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+ 
+  .schedule_header_grid,
+  .schedule_add_row {
+    grid-template-columns: 1fr 1fr 44px;
+    gap: 8px;
+  }
+ 
+  .schedule_header_grid .schedule_grid_header_title:nth-child(3),
+  .schedule_add_row .admin_form_select:nth-child(3) {
+    display: none;
+  }
+ 
+  .admin_workspace_form_footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+ 
+  .button_model_primary,
+  .button_model_secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+}

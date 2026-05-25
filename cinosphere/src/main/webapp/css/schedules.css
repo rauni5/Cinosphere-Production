@@ -1,0 +1,195 @@
+.schedules_screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--obsidian);
+}
+
+.date_strip_section {
+    padding-left: 3.6rem;
+}
+
+.schedules_date_strip {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-top: 2rem;
+    padding-bottom: 2px;
+}
+
+.schedules_date_strip::-webkit-scrollbar {
+    display: none;
+}
+
+.schedules_filter_section {
+    padding: 2rem 4.0%;
+    background: var(--obsidian);
+}
+
+.schedules_filter_container {
+    background: rgba(17, 20, 25, 0.80);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.schedules_search_wrapper {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    transition: 0.3s ease;
+}
+
+.schedules_search_wrapper:focus-within {
+    border-color: rgba(201, 168, 76, 0.40);
+    background: rgba(201, 168, 76, 0.03);
+}
+
+.schedules_search_icon_container img {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1); 
+    opacity: 0.8;
+}
+
+.schedules_search_input {
+    background: none;
+    border: none;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text);
+    width: 100%;
+}
+
+.schedules_search_input::placeholder {
+    color: var(--text);
+}
+
+.schedules_filter_dropdown_group {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.schedules_select_wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.schedules_select_arrow {
+    position: absolute;
+    right: 12px;
+    pointer-events: none; 
+    display: flex;
+    align-items: center;
+}
+
+.schedules_select_arrow img {
+    width: 10px;
+    filter: brightness(0) invert(1);
+    opacity: 0.4;
+}
+
+.schedules_filter_select {
+    appearance: none; 
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 32px 10px 14px;
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.schedules_filter_select:focus {
+    border-color: var(--gold-dim);
+    color: var(--text);
+}
+
+.schedules_filter_select option {
+    background: var(--obsidian);
+    color: var(--text);
+}
+
+.schedules_filter_pill {
+    font-family: var(--font-ui);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text); 
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 9px 21px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    outline: none;
+    display: inline-block;
+}
+
+.schedules_filter_pill:hover {
+    transform: translateY(-0.6px);
+    transition: color 0.5s ease;
+    border-color: var(--gold-dim);
+}
+
+.schedules_list_section {
+    padding: 1.5rem 4%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    background: var(--obsidian);
+}
+
+@media (max-width: 768px) {
+
+  .date_strip_section {
+    padding-left: 1rem;
+  }
+
+  .schedules_filter_section {
+    padding: 1rem 4%;
+  }
+
+  .schedules_filter_container {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+
+  .schedules_search_wrapper {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .schedules_filter_dropdown_group {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .schedules_list_section {
+    padding: 1rem 4%;
+  }
+
+}

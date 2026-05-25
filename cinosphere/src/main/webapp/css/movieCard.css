@@ -1,0 +1,146 @@
+.movie_feature_film_card {
+    background: var(--surface);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.movie_feature_film_card:hover {
+    transform: translateY(-8px);
+    border-color: var(--gold-dim);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.coming_soon_card {
+    display: flex;
+    flex-direction: column;
+}
+
+.movie_release_header {
+    width: 100%;
+    background: var(--crimson-bright);
+    padding: 8px 0;
+    text-align: center;
+}
+
+.release_date_text {
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.movie_poster_visual_wrapper {
+    position: relative;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+}
+
+.movie_poster_image_element {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.movie_status_badge_group {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+}
+
+.movie_certification_badge {
+    padding: 4px 10px;
+    background: var(--gold-light);
+    color: var(--obsidian);
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 750;
+    border-radius: 3px;
+}
+
+.movie_information_panel {
+    padding: 1.25rem 1rem;
+    background: var(--glass);
+    text-align: center;
+    border-top: 1px solid var(--glass-border);
+}
+
+.movie_title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 4px;
+    line-height: 1.2;
+}
+
+.movie_description {
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 300;
+}
+
+.movie_description span {
+    color: var(--crimson-bright);
+    margin-left: 6px;
+    font-weight: 700;
+}
+
+.movie_action_button_bar {
+    display: flex;
+    gap: 8px;
+    margin-top: 1.2rem;
+}
+
+.movie_booking_primary_button {
+    flex: 1;
+    height: 36px;
+    color: var(--obsidian);
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    border: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 4px 18px rgba(201, 168, 76, 0.18);
+    transition: all 0.2s ease;
+}
+
+.movie_booking_primary_button:hover {
+    transform: translateY(-2px);
+}
+
+.movie_quick_view_icon_wrapper {
+    width: 36px;
+    height: 36px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.movie_quick_view_icon_wrapper img {
+    width: 20px;
+    filter: brightness(0) invert(1);
+}
+
+@media (max-width: 768px) {
+
+  .movie_title {
+    font-size: 15px;
+  }
+
+}
