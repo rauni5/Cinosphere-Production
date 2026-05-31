@@ -2,16 +2,35 @@ package com.cinosphere.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import jakarta.persistence.*;
 /**
  * Model class representing database table Payment and its attributes
  */
+@Entity
+@Table(name = "payment")
 public class PaymentModel {
-	private int paymentId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "payment_id")
+    private int paymentId;
+
+    @Column(name = "booking_id")
     private int bookingId;
+
+    @Column(name = "payment_method")
     private String paymentMethod;
+
+    @Column(name = "payment_amount")
     private double paymentAmount;
+
+    @Column(name = "payment_date")
     private LocalDate paymentDate;
+
+    @Column(name = "payment_time")
     private LocalTime paymentTime;
+
+    @Column(name = "payment_status")
     private String paymentStatus;
     /**
      * Returns the unique payment ID.

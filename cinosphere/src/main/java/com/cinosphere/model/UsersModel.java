@@ -1,20 +1,37 @@
 package com.cinosphere.model;
 
 import java.time.LocalDate;
+
+import jakarta.persistence.*;
 /**
  * Model class representing database table Customer and its attributes				
  */
+@Entity
+@Table(name = "users") 
 public class UsersModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
 	private int userId;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "username", unique = true)
     private String username;
+    @Column(name = "email", unique = true)
     private String email;
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+    @Column(name = "gender")
     private String gender;
+    @Column(name = "hash_password")
     private String hashPassword;
+     @Column(name = "registration_date")
     private LocalDate registrationDate;
+    @Column(name = "is_active")
     private boolean isActive;
+    @Column(name = "user_role")
     private String userRole;
     /**
      * Returns the unique user ID.

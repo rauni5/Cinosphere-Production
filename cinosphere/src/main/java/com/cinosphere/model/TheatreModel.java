@@ -1,14 +1,34 @@
 package com.cinosphere.model;
+
+import jakarta.persistence.*;
+
 /**
  * Model class representing database table Theatre and its attributes
  */
+@Entity
+@Table(name = "theatre")
 public class TheatreModel {
-	private int theatreId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "theatre_id")
+    private int theatreId;
+
+    @Column(name = "theatre_name")
     private String theatreName;
+
+    @Column(name = "city")
     private String city;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "contact_number")
     private String contactNumber;
+
+    @Column(name = "total_screens")
     private int totalScreens;
+
+    @Column(name = "theatre_status")
     private String theatreStatus;
     /**
      * Returns the unique theatre ID.

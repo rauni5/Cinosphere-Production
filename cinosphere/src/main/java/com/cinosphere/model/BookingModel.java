@@ -2,17 +2,37 @@ package com.cinosphere.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import jakarta.persistence.*;
 /**
  * Model class representing database table Booking and its attributes
  */
+@Entity
+@Table(name = "booking")
 public class BookingModel {
-	private int bookingId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "booking_id")
+    private int bookingId;
+
+    @Column(name = "user_id")
     private int userId;
+
+    @Column(name = "booking_date")
     private LocalDate bookingDate;
+
+    @Column(name = "booking_time")
     private LocalTime bookingTime;
+
+    @Column(name = "booking_status")
     private String bookingStatus;
+
+    @Column(name = "total_amount")
     private double totalAmount;
+
+    @Column(name = "booking_channel")
     private String bookingChannel;
+
+    @Column(name = "loyalty_points_earned")
     private int loyaltyPointsEarned;
     /**
      * Returns the unique booking ID.

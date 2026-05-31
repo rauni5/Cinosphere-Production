@@ -1,14 +1,34 @@
 package com.cinosphere.model;
+
+import jakarta.persistence.*;
+
 /**
  * Model class representing database table Screen and its attributes
  */
+@Entity
+@Table(name = "screen")
 public class ScreenModel {
-	private int screenId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "screen_id")
+    private int screenId;
+
+    @Column(name = "theatre_id")
     private int theatreId;
+
+    @Column(name = "screen_name")
     private String screenName;
+
+    @Column(name = "screen_type")
     private String screenType;
+
+    @Column(name = "screen_status")
     private String screenStatus;
+
+    @Column(name = "total_capacity")
     private int totalCapacity;
+
+    @Column(name = "base_price")
     private double basePrice;
     /**
      * Returns the unique screen ID.

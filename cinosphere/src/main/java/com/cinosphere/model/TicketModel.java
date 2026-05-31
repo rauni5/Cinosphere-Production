@@ -1,17 +1,38 @@
 package com.cinosphere.model;
 
 import java.time.LocalDate;
+
+import jakarta.persistence.*;
 /**
  * Model class representing database table Ticket and its attributes
  */
+@Entity
+@Table(name = "ticket")
 public class TicketModel {
-	private int ticketId;
+   @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ticket_id")
+    private int ticketId;
+
+    @Column(name = "booking_id")
     private int bookingId;
+
+    @Column(name = "showtime_id")
     private int showtimeId;
+
+    @Column(name = "seat_id")
     private int seatId;
+
+    @Column(name = "ticket_type")
     private String ticketType;
+
+    @Column(name = "ticket_status")
     private String ticketStatus;
+
+    @Column(name = "issue_date")
     private LocalDate issueDate;
+
+    @Column(name = "ticket_price")
     private double ticketPrice;
     
     /**

@@ -2,17 +2,38 @@ package com.cinosphere.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import jakarta.persistence.*;
 /**
  * Model class representing database table Feedback and its attributes
  */
+@Entity
+@Table(name = "feedback")
 public class FeedbackModel {
-	private int feedbackId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "feedback_id")
+    private int feedbackId;
+
+    @Column(name = "user_id")
     private int userId;
+
+    @Column(name = "movie_id")
     private int movieId;
+
+    @Column(name = "rating")
     private int rating;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "feedback_date")
     private LocalDate feedbackDate;
+
+    @Column(name = "feedback_time")
     private LocalTime feedbackTime;
+
+    @Column(name = "feedback_status")
     private String feedbackStatus;
     /**
      * Returns the unique feedback ID.

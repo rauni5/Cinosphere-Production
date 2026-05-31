@@ -1,13 +1,31 @@
 package com.cinosphere.model;
+
+import jakarta.persistence.*;
+
 /**
  * Model class representing database table Feedback and its attributes
  */
+@Entity
+@Table(name = "seat")
 public class SeatModel {
-	private int seatId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "seat_id")
+    private int seatId;
+
+    @Column(name = "screen_id")
     private int screenId;
+
+    @Column(name = "seat_number")
     private int seatNumber;
+
+    @Column(name = "row_number")
     private String rowNumber;
+
+    @Column(name = "seat_type")
     private String seatType;
+
+    @Column(name = "seat_status")
     private String seatStatus;
     /**
      * Returns the unique seat ID.

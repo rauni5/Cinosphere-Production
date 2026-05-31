@@ -2,17 +2,38 @@ package com.cinosphere.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import jakarta.persistence.*;
 /**
  * Model class representing database table ShowtimeModel and its attributes
  */
+@Entity
+@Table(name = "showtime")
 public class ShowtimeModel {
-	private int showtimeId;
+   @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "showtime_id")
+    private int showtimeId;
+
+    @Column(name = "screen_id")
     private int screenId;
+
+    @Column(name = "movie_id")
     private int movieId;
+
+    @Column(name = "show_date")
     private LocalDate showDate;
+
+    @Column(name = "start_time")
     private LocalTime startTime;
+
+    @Column(name = "end_time")
     private LocalTime endTime;
+
+    @Column(name = "show_status")
     private String showStatus;
+
+    @Column(name = "show_type")
     private String showType;
     /**
      * Returns the unique showtime ID.

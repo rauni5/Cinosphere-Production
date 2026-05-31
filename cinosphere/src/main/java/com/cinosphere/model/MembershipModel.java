@@ -1,13 +1,31 @@
 package com.cinosphere.model;
+
+import jakarta.persistence.*;
+
 /**
  * Model class representing database table Membership and its attributes
  */
+@Entity
+@Table(name = "membership")
 public class MembershipModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "membership_id")
     private int membershipId;
+
+    @Column(name = "user_id")
     private int userId;
+
+    @Column(name = "membership_type")
     private String membershipType;
+
+    @Column(name = "membership_status")
     private String membershipStatus;
+
+    @Column(name = "total_loyalty_points")
     private int totalLoyaltyPoints;
+
+    @Column(name = "discount_percentage")
     private double discountPercentage;
     /**
      * Returns the unique membership ID.

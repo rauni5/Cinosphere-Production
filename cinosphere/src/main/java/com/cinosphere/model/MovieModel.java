@@ -1,19 +1,44 @@
 package com.cinosphere.model;
 
 import java.time.LocalDate;
+
+import jakarta.persistence.*;
 /*8
  * Model class representing database table Movie and its attributes
  */
+@Entity
+@Table(name = "movie")
 public class MovieModel {
-	private int movieId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movie_id")
+    private int movieId;
+
+    @Column(name = "movie_name")
     private String movieName;
+
+    @Column(name = "duration")
     private int duration;
+
+    @Column(name = "director")
     private String director;
+
+    @Column(name = "genre")
     private String genre;
+
+    @Column(name = "movie_language")
     private String movieLanguage;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "release_date")
     private LocalDate releaseDate;
+
+    @Column(name = "movie_status")
     private String movieStatus;
+
+    @Column(name = "age_rating")
     private String ageRating;
     /**
      * Returns the unique movie ID.
