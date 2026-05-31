@@ -55,7 +55,6 @@ public class AddMovieServlet extends HttpServlet {
      */
     public AddMovieServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -93,7 +92,6 @@ public class AddMovieServlet extends HttpServlet {
 		String description = request.getParameter("movieDescription");
 		String releaseDateStr = request.getParameter("movieReleaseDate");
 		String durationStr = request.getParameter("movieDuration");
-
 		String[] halls = request.getParameterValues("scheduleHall[]");
 		String[] dates = request.getParameterValues("scheduleDate[]");
 		String[] times = request.getParameterValues("scheduleTime[]");

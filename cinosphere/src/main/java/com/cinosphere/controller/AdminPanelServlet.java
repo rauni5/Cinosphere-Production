@@ -11,14 +11,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cinosphere.dao.MembershipDAO;
+
 import com.cinosphere.model.BookingModel;
 import com.cinosphere.model.MembershipModel;
 import com.cinosphere.model.MovieModel;
 import com.cinosphere.model.ScreenModel;
 import com.cinosphere.model.SeatModel;
 import com.cinosphere.model.ShowtimeModel;
-import com.cinosphere.model.TheatreModel;
 import com.cinosphere.model.TicketModel;
 import com.cinosphere.model.UsersModel;
 import com.cinosphere.service.BookingService;
@@ -30,7 +29,6 @@ import com.cinosphere.service.ShowtimeService;
 import com.cinosphere.service.TheatreService;
 import com.cinosphere.service.TicketService;
 import com.cinosphere.service.UserService;
-import com.cinosphere.utils.SessionUtil;
 
 /**
  * Servlet implementation class AdminPanelServlet
@@ -66,7 +64,6 @@ public class AdminPanelServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		 try {
 			 double revenueToday = bookingService.getTodayRevenue();
 			 int ticketsSoldToday = bookingService.getTodayBooking();

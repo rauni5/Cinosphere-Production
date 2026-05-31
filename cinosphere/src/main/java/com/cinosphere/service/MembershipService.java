@@ -6,9 +6,6 @@ import java.util.List;
 import com.cinosphere.dao.MembershipDAO;
 import com.cinosphere.model.MembershipModel;
 import com.cinosphere.model.UsersModel;
-import com.cinosphere.utils.SessionUtil;
-
-import jakarta.servlet.http.HttpServletRequest;
 /**
  * Service Class that is the bridge between Servlet and MembershipDAO
  * Contains methods used to call methods of DAO and perform interaction with DB Membership Table

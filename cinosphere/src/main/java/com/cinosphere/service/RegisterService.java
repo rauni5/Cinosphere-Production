@@ -1,7 +1,6 @@
 package com.cinosphere.service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import com.cinosphere.dao.UsersDAO;
 import com.cinosphere.dao.MembershipDAO;

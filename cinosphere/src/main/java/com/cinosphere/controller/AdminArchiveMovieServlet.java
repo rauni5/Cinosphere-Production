@@ -40,7 +40,7 @@ public class AdminArchiveMovieServlet extends HttpServlet {
 		}
 		int id = Integer.parseInt(movieId);
 		try {
-			movieService.updateMovieStatus(id, "ARCHIVE");
+			movieService.updateMovieStatus(id, STATUS);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

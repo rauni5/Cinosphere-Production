@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.cinosphere.dao.PaymentDAO;
-import com.cinosphere.model.PaymentModel;
 /**
  * Service Class that is the bridge between Servlet and PaymentDAO
  * Contains methods used to call methods of DAO and perform interaction with DB Payment Table
