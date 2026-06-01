@@ -1,0 +1,261 @@
+.contact_screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--obsidian);
+}
+
+.contact_content_wrapper {
+  padding: 4rem 10%;
+}
+
+
+.contact_content_wrapper {
+  padding: 4rem 4.0%;
+}
+
+.contact_page_grid_container {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.contact_form_column {
+  display: flex;
+}
+
+.contact_form_panel_card {
+  width: 100%;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 3rem;
+  backdrop-filter: blur(20px);
+}
+
+.form_panel_title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--text);
+}
+
+.form_panel_title em {
+  color: var(--gold-light);
+}
+
+.form_panel_description {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0.5rem 0 2rem;
+  line-height: 1.7;
+}
+
+.form_grid_two_columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.form_input_group {
+  margin-bottom: 1.5rem;
+}
+
+.form_input_label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.form_text_field,
+.form_text_area_field {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  padding: 14px;
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  outline: none;
+}
+
+.form_text_area_field {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.form_subject_pills_container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter_pill_element {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  border-radius: 20px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.pill_active {
+  background: var(--gold-light);
+  color: var(--obsidian);
+  border: none;
+  font-weight: 600;
+}
+
+.form_submit_button_gold {
+  width: 100%;
+  padding: 16px;
+  background: var(--gold-light);
+  color: var(--obsidian);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.contact_right_column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact_info_row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.info_card_item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 22px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  min-width: 0;
+}
+
+.info_card_icon_wrapper {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.info_card_icon_wrapper img {
+  width: 20px;
+  height: 20px;
+}
+
+.icon_theme_gold {
+  background: rgba(201, 168, 76, 0.12);
+}
+
+.icon_theme_red {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.info_card_label_text {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  letter-spacing: 0.12em;
+}
+
+.info_card_main_value {
+  font-size: 14px;
+  color: var(--text);
+  margin-top: 5px;
+  line-height: 1.5;
+}
+
+.info_card_secondary_subtext {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.faq_glass_container {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+}
+
+.faq_main_title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.faq_main_title em {
+  color: var(--gold-light);
+}
+
+.faq_item {
+  border-bottom: 1px solid var(--glass-border);
+  padding: 1rem 0;
+}
+
+.faq_item:last-child {
+  border-bottom: none;
+}
+
+.faq_question_row {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq_answer_row {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+
+  .contact_content_wrapper {
+    padding: 2rem 4%;
+  }
+
+  .contact_page_grid_container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .contact_form_panel_card {
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .form_grid_two_columns {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .contact_info_row {
+    grid-template-columns: 1fr;
+  }
+
+}

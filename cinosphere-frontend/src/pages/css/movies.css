@@ -1,0 +1,214 @@
+.movie_screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--obsidian);
+}
+
+.movie_filter_section {
+    padding: 2rem 4.0%;
+    background: var(--obsidian);
+}
+
+.movie_filter_container {
+    background: rgba(17, 20, 25, 0.80);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.movie_search_wrapper {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    transition: 0.3s ease;
+}
+
+.movie_search_wrapper:focus-within {
+    border-color: rgba(201, 168, 76, 0.40);
+    background: rgba(201, 168, 76, 0.03);
+}
+
+.movie_search_icon_container img {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1); 
+    opacity: 0.8;
+}
+
+.movie_search_input {
+    background: none;
+    border: none;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text);
+    width: 100%;
+}
+
+.movie_search_input::placeholder {
+    color: var(--text);
+}
+
+.movie_filter_dropdown_group {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.movie_select_wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.movie_select_arrow {
+    position: absolute;
+    right: 12px;
+    pointer-events: none; 
+    display: flex;
+    align-items: center;
+}
+
+.movie_select_arrow img {
+    width: 10px;
+    filter: brightness(0) invert(1);
+    opacity: 0.4;
+}
+
+.movie_filter_select {
+    appearance: none; 
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 32px 10px 14px;
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.movie_filter_select:focus {
+    border-color: var(--gold-dim);
+    color: var(--text);
+}
+
+.movie_filter_select option {
+    background: var(--obsidian);
+    color: var(--text);
+}
+
+.movie_filter_pill {
+    font-family: var(--font-ui);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text); 
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 9px 21px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    outline: none;
+    display: inline-block;
+}
+
+.movie_filter_pill:hover {
+  transform: translateY(-0.6px);
+  transition: color 0.5s ease;
+  border-color: var(--gold-dim);
+}
+
+.movie_display_section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.movie_on_screen_strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 108%;
+    box-sizing: border-box;
+}
+
+.movie_main_content_container {
+    padding: 1.0rem 4.0% 1.0rem 4.0%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.movie_cards_presentation_grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+
+  .movie_filter_section {
+    padding: 1rem 4%;
+  }
+
+  .movie_filter_container {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+  }
+
+  .movie_search_wrapper {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .movie_filter_dropdown_group {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .movie_filter_select {
+    flex: 1;
+    min-width: 130px;
+  }
+
+  .movie_main_content_container {
+    padding: 1rem 4%;
+  }
+
+  .movie_on_screen_strip {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+  }
+
+  .movie_cards_presentation_grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+}

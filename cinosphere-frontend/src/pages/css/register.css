@@ -1,0 +1,344 @@
+.registration_screen {
+    background: var(--obsidian);
+    min-height: 100vh;
+    width: 100%;
+}
+
+.authentication_layout_wrapper {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+}
+
+.authentication_left_column {
+    position: relative;
+    overflow: hidden;
+    background: var(--deep);
+    display: flex;
+    flex-direction: column;
+    padding: 4rem;
+}
+
+.authentication_background_overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 30% 50%, rgba(139, 26, 26, 0.15) 0%, transparent 50%), 
+                linear-gradient(135deg, var(--obsidian) 0%, var(--deep) 100%);
+    z-index: 0;
+}
+
+.authentication_body_content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.registration_information_block {
+    max-width: 440px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.authentication_hero_headline {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 62px);
+    font-weight: 300;
+    line-height: 0.95;
+    color: var(--text);
+    letter-spacing: -0.04em;
+}
+
+.authentication_hero_headline em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+}
+
+.authentication_hero_body {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--text-dim);
+    margin-top: 1.5rem;
+    max-width: 600px;
+}
+
+.authentication_feature_list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.authentication_feature_item {
+    display: flex;
+  	align-items: center;
+  	gap: 15px;
+}
+
+.authentication_feature_dot {
+    width: 6px;
+	height: 6px;
+	background: var(--gold);
+	border-radius: 50%;
+	box-shadow: 0 0 10px var(--gold);
+	opacity: 0.7;
+}
+
+.authentication_feature_text {
+    font-family: var(--font-body);
+  	font-size: 11px;
+  	font-weight: 600;
+  	letter-spacing: 0.2em;
+  	text-transform: uppercase;
+  	color: var(--text-dim);
+}
+
+.authentication_right_section {
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0.5rem;
+	padding-right: 2rem;
+	padding-bottom: 4.5rem;
+	padding-left: 2rem;
+    overflow-y: auto;
+}
+
+.authentication_panel_container {
+    width: 100%;
+    max-width: 440px;
+    position: relative;
+    z-index: 1;
+}
+
+.registration_header_area {
+  margin-bottom: 0.5rem;
+}
+
+.authentication_panel_title {
+    font-family: var(--font-display);
+	font-size: 36px;
+	font-weight: 300;
+	color: var(--text);
+	line-height: 1.1;
+}
+
+.authentication_panel_title em {
+    font-style: italic;
+    color: var(--gold);
+}
+
+.authentication_panel_subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.glass_panel_container {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid var(--glass-border-md);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(25px);
+  	padding: 1.5rem;
+  	box-shadow: var(--shadow-glass);
+  	margin-top:1.3rem;
+  	width:60vh;
+}
+
+.form_group_wrapper { 
+	margin-bottom: 1.25rem; 
+}
+
+.form_row_double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form_label_text {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+}
+
+.form_input_wrapper { 
+	position: relative; 
+}
+
+.form_input_field, .form_select_field {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+    padding: 11px 15px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: all 0.2s;
+}
+
+.form_input_field:focus {
+    border-color: var(--gold);
+    background: rgba(201, 168, 76, 0.05);
+}
+
+.form_input_icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.form_input_icon img {
+  width: 18px;
+  height: 18px;
+  opacity: 0.5;
+  filter: brightness(0) invert(1);
+}
+
+.form_input_wrapper .form_input_field {
+    padding-right: 40px;
+}
+
+.form_input_wrapper:focus-within .form_input_icon img {
+    opacity: 1;
+}
+
+.membership_selector_row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.membership_option_card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 12px 5px;
+    text-align: center;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+}
+
+.membership_option_card input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+.membership_option_card:has(input:checked) {
+    border-color: var(--gold);
+    background: rgba(201, 168, 76, 0.1);
+}
+
+.membership_option_card:has(input:checked) .membership_price_label {
+    color: var(--text);
+}
+
+.membership_tier_name {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom:2px;
+}
+
+.membership_price_label {
+    display: block;
+    font-size: 17px;
+    font-family: var(--font-display);
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.primary_form_button_gold {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: var(--obsidian);
+    border: none;
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-ui);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.primary_form_button_gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(201, 168, 76, 0.3);
+}
+
+.authentication_switch_text {
+    text-align: center;
+    margin-top: 1.0rem;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.authentication_switch_text a {
+    color: var(--gold-dim);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 4px;
+    transition: color 0.5s ease;
+}
+
+.authentication_switch_text a:hover{
+	color: var(--gold-light);
+}
+
+@media (max-width: 768px) {
+
+  .authentication_layout_wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .authentication_left_column {
+    display: none;
+  }
+
+  .authentication_right_section {
+    padding: 2rem 1.2rem 3rem;
+    min-height: calc(100vh - var(--header-total));
+  }
+
+  .glass_panel_container {
+    width: 100%;
+  }
+
+  .form_row_double {
+    grid-template-columns: 1fr;
+  }
+
+  .membership_selector_row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+}

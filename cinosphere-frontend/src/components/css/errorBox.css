@@ -1,0 +1,65 @@
+.error_banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(139, 26, 26, 0.18);
+    border: 1px solid rgba(198, 40, 40, 0.32);
+    border-left: 4px solid var(--crimson-bright);
+    border-radius: var(--radius-md);
+    position: relative;
+    margin-bottom: 1.0rem;
+}
+
+.error_banner_icon_container {
+    flex-shrink: 0;
+    width: 18px;
+    height: 12px;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--crimson-bright);
+}
+
+.error_banner_icon_container img {
+    width: 22px;
+    height: 22px;
+}
+
+.error_banner_text_group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.error_banner_title {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--crimson-bright);
+    margin: 0 0 2px;
+}
+
+.error_banner_close_button {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+    transition: 0.2s ease;
+}
+
+.error_banner_close_button:hover {
+    opacity: 1.0;
+    transition: color 0.5s ease;
+}
+
+.error_banner_close_button img {
+    width: 15px;
+    height: 15px;
+  	filter: brightness(0) invert(1);
+}
