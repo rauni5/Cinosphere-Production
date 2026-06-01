@@ -1,33 +1,31 @@
 package com.cinosphere.service;
 
+import com.cinosphere.model.SeatModel;
+import com.cinosphere.repository.SeatRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-import com.cinosphere.dao.SeatDAO;
-import com.cinosphere.model.SeatModel;
 /**
- * Service Class that is the bridge between Servlet and SeatDAO
- * Contains methods used to call methods of DAO and perform interaction with DB Seat Table
- * 
- * @author Raunit Giri
+ * Handles seat queries.
+ *
+ * Changes from original SeatService:
+ *  - Throws IllegalArgumentException (not null) when a seat is not found.
+ *  - Injected SeatRepository instead of new SeatDAO().
  */
+@Service
 public class SeatService {
-	private SeatDAO seatDAO = new SeatDAO();
-	/**
-	 * Finds Seat using screen Id
-	 * @param screenId
-	 * @return Seat List
-	 * @throws Exception
-	 */
-	public List<SeatModel> getSeatsByScreenId(int screenId) throws Exception {
-		return seatDAO.findByScreenId(screenId);
-	}
-	/**
-	 * Finds seat using Id
-	 * @param seatId
-	 * @return Seat
-	 * @throws Exception
-	 */
-	public SeatModel getSeatById(int seatId) throws Exception {
-		return seatDAO.findBySeatId(seatId);
-	}
+
+    @Autowired
+    private SeatRepository seatRepository;
+
+    public List<SeatModel> getSeatsByScreenId(int screenId) {
+        return seatRepository.findByScreenId(screenId);
+    }
+
+    public SeatModel getSeatById(int seatId) {
+        return seatRepository.findById(seatId)
+                .orElseThrow(() -> new IllegalArgumentException("Seat not found: " + seatId));
+    }
 }

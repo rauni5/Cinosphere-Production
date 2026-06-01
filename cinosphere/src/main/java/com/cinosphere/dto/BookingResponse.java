@@ -1,5 +1,6 @@
 package com.cinosphere.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -14,7 +15,7 @@ public class BookingResponse {
     private LocalDate bookingDate;
     private LocalTime bookingTime;
     private String bookingStatus;
-    private double totalAmount;
+    private BigDecimal totalAmount;
     private int loyaltyPointsEarned;
     private String paymentMethod;
 
@@ -59,8 +60,8 @@ public class BookingResponse {
     public String getBookingStatus()           { return bookingStatus; }
     public void setBookingStatus(String v)     { this.bookingStatus = v; }
 
-    public double getTotalAmount()             { return totalAmount; }
-    public void setTotalAmount(double v)       { this.totalAmount = v; }
+    public BigDecimal getTotalAmount()             { return totalAmount; }
+    public void setTotalAmount(BigDecimal v)       { this.totalAmount = v; }
 
     public int getLoyaltyPointsEarned()        { return loyaltyPointsEarned; }
     public void setLoyaltyPointsEarned(int v)  { this.loyaltyPointsEarned = v; }

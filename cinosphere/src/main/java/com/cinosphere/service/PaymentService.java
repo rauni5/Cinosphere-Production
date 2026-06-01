@@ -1,26 +1,37 @@
 package com.cinosphere.service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import com.cinosphere.model.PaymentModel;
+import com.cinosphere.repository.PaymentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.cinosphere.dao.PaymentDAO;
+import java.util.List;
+
 /**
- * Service Class that is the bridge between Servlet and PaymentDAO
- * Contains methods used to call methods of DAO and perform interaction with DB Payment Table
- * 
- * @author Raunit Giri
+ * Handles payment queries.
+ *
+ * Note: payment *creation* now happens inside BookingService.createBooking()
+ * as part of the single @Transactional booking flow.
+ * This service is kept for read operations: admin revenue reports,
+ * payment history per booking, etc.
+ *
+ * Changes from original PaymentService:
+ *  - createPayment() removed — creation is handled transactionally in BookingService.
+ *  - Added getPaymentByBookingId() and getAll() for admin reporting.
+ *  - Injected PaymentRepository instead of new PaymentDAO().
  */
+@Service
 public class PaymentService {
-	private PaymentDAO paymentDAO = new PaymentDAO();
-	/**
-	 * Create payment record
-	 * @param bookingId
-	 * @param paymentMethod
-	 * @param paymentAmount
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public boolean createPayment(int bookingId, String paymentMethod, double paymentAmount) throws Exception {
-		return paymentDAO.insert(bookingId,paymentMethod,paymentAmount,LocalDate.now(),LocalTime.now(),"COMPLETED");
-	}
+
+    @Autowired
+    private PaymentRepository paymentRepository;
+
+    public PaymentModel getPaymentByBookingId(int bookingId) {
+        return paymentRepository.findByBookingId(bookingId)
+                .orElseThrow(() -> new IllegalArgumentException("Payment not found for booking: " + bookingId));
+    }
+
+    public List<PaymentModel> getAllPayments() {
+        return paymentRepository.findAll();
+    }
 }

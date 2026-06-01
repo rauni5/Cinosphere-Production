@@ -1,43 +1,38 @@
 package com.cinosphere.service;
 
+import com.cinosphere.dto.UpdateBasePriceRequest;
+import com.cinosphere.model.ScreenModel;
+import com.cinosphere.repository.ScreenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-import com.cinosphere.dao.ScreenDAO;
-import com.cinosphere.model.ScreenModel;
 /**
- * Service Class that is the bridge between Servlet and ScreengDAO
- * Contains methods used to call methods of DAO and perform interaction with DB Screen Table
- * 
- * @author Raunit Giri
+ * Handles screen queries and base price updates.
+ *
+ * Changes from original ScreenService:
+ *  - updateBasePrice() accepts the typed DTO instead of a raw double.
+ *  - Injected ScreenRepository instead of new ScreenDAO().
  */
+@Service
 public class ScreenService {
-	private ScreenDAO screenDAO = new ScreenDAO();
-		/**
-		 * Finds screen suing Id
-		 * @param screenId
-		 * @return screen
-		 * @throws Exception
-		 */
-		public ScreenModel getScreenById(int screenId) throws Exception {
-			return screenDAO.findByScreenId(screenId);
-		}
-		/**
-		 * Updates base price of screen
-		 * @param screenId
-		 * @param basePrice
-		 * @return boolean
-		 * @throws Exception
-		 */
-		public boolean updateBasePrice(int screenId, double basePrice) throws Exception {
-			return screenDAO.updateScreenBasePrice(screenId, basePrice);
-		}
 
-		/**
-		 * Finds all screen records
-		 * @return screen
-		 * @throws Exception
-		 */
-		public List<ScreenModel> getAllScreens() throws Exception{
-			return screenDAO.getAllScreen();
-		}
+    @Autowired
+    private ScreenRepository screenRepository;
+
+    public ScreenModel getScreenById(int screenId) {
+        return screenRepository.findById(screenId)
+                .orElseThrow(() -> new IllegalArgumentException("Screen not found: " + screenId));
+    }
+
+    public List<ScreenModel> getAllScreens() {
+        return screenRepository.findAll();
+    }
+
+    public ScreenModel updateBasePrice(int screenId, UpdateBasePriceRequest request) {
+        ScreenModel screen = getScreenById(screenId);
+        screen.setBasePrice(request.getBasePrice());
+        return screenRepository.save(screen);
+    }
 }

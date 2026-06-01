@@ -1,5 +1,6 @@
 package com.cinosphere.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
@@ -33,7 +34,7 @@ public class TicketModel {
     private LocalDate issueDate;
 
     @Column(name = "ticket_price")
-    private double ticketPrice;
+    private BigDecimal ticketPrice;
     
     /**
      * Returns the unique ticket ID.
@@ -166,7 +167,7 @@ public class TicketModel {
      * 
      * @return double
      */
-    public double getTicketPrice() { 
+    public BigDecimal getTicketPrice() { 
     	return ticketPrice; 
     }
 
@@ -175,7 +176,7 @@ public class TicketModel {
      * 
      * @param ticketPrice
      */
-    public void setTicketPrice(double ticketPrice) { 
+    public void setTicketPrice(BigDecimal ticketPrice) { 
     	this.ticketPrice = ticketPrice; 
     }
 }

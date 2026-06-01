@@ -1,5 +1,7 @@
 package com.cinosphere.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
 
 /**
@@ -29,7 +31,7 @@ public class ScreenModel {
     private int totalCapacity;
 
     @Column(name = "base_price")
-    private double basePrice;
+    private BigDecimal basePrice;
     /**
      * Returns the unique screen ID.
      * 
@@ -143,7 +145,7 @@ public class ScreenModel {
      * 
      * @return double
      */
-    public double getBasePrice() { 
+    public BigDecimal getBasePrice() { 
     	return basePrice; 
     }
 
@@ -152,7 +154,7 @@ public class ScreenModel {
      * 
      * @param basePrice
      */
-    public void setBasePrice(double basePrice) { 
+    public void setBasePrice(BigDecimal basePrice) { 
     	this.basePrice = basePrice; 
     }
 }

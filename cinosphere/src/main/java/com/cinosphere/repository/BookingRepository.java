@@ -23,6 +23,7 @@ public interface BookingRepository extends JpaRepository<BookingModel, Integer> 
 
     // ================= UPCOMING BOOKINGS =================
 
+    
     @Query("""
         SELECT DISTINCT b FROM BookingModel b
         JOIN TicketModel t ON t.bookingId = b.bookingId
@@ -46,7 +47,7 @@ public interface BookingRepository extends JpaRepository<BookingModel, Integer> 
 
     long count();
 
-    long countByUserId(int userId);
+    int countByUserId(int userId);
 
     @Query("""
         SELECT COUNT(DISTINCT b.bookingId)
@@ -55,7 +56,7 @@ public interface BookingRepository extends JpaRepository<BookingModel, Integer> 
         JOIN ShowtimeModel s ON s.showtimeId = t.showtimeId
         WHERE b.userId = :userId AND s.showDate >= CURRENT_DATE
     """)
-    long countUpcomingByUserId(int userId);
+    int countUpcomingByUserId(int userId);
 
     @Query("""
         SELECT COUNT(b)
@@ -63,7 +64,7 @@ public interface BookingRepository extends JpaRepository<BookingModel, Integer> 
         WHERE MONTH(b.bookingDate) = MONTH(CURRENT_DATE)
         AND YEAR(b.bookingDate) = YEAR(CURRENT_DATE)
     """)
-    long countCurrentMonthBookings();
+    int countCurrentMonthBookings();
 
     @Query("""
         SELECT COUNT(b)
@@ -72,7 +73,7 @@ public interface BookingRepository extends JpaRepository<BookingModel, Integer> 
         AND YEAR(b.bookingDate) = YEAR(CURRENT_DATE)
         AND b.userId = :userId
     """)
-    long countCurrentMonthBookingsByUserId(int userId);
+    int countCurrentMonthBookingsByUserId(int userId);
 
     // ================= REVENUE =================
 
@@ -88,7 +89,7 @@ public interface BookingRepository extends JpaRepository<BookingModel, Integer> 
         FROM BookingModel b
         WHERE DATE(b.bookingDate) = :date
     """)
-    long countByBookingDate(LocalDate date);
+    int countByBookingDate(LocalDate date);
 
     // ================= SEAT TRACKING =================
 

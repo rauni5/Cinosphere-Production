@@ -1,5 +1,6 @@
 package com.cinosphere.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -22,7 +23,7 @@ public class PaymentModel {
     private String paymentMethod;
 
     @Column(name = "payment_amount")
-    private double paymentAmount;
+    private BigDecimal paymentAmount;
 
     @Column(name = "payment_date")
     private LocalDate paymentDate;
@@ -91,7 +92,7 @@ public class PaymentModel {
      * 
      * @return double
      */
-    public double getPaymentAmount() { 
+    public BigDecimal getPaymentAmount() { 
     	return paymentAmount; 
     }
 
@@ -100,7 +101,7 @@ public class PaymentModel {
      * 
      * @param paymentAmount
      */
-    public void setPaymentAmount(double paymentAmount) { 
+    public void setPaymentAmount(BigDecimal paymentAmount) { 
     	this.paymentAmount = paymentAmount;
     }
 

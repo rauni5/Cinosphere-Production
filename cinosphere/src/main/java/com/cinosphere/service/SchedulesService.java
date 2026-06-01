@@ -1,231 +1,185 @@
 package com.cinosphere.service;
 
+import com.cinosphere.dto.ScheduleFilterRequest;
+import com.cinosphere.dto.ScheduleResponse;
+import com.cinosphere.dto.ScheduleResponse.*;
+import com.cinosphere.model.*;
+import com.cinosphere.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import com.cinosphere.dao.MovieDAO;
-import com.cinosphere.dao.ScreenDAO;
-import com.cinosphere.dao.ShowtimeDAO;
-import com.cinosphere.dao.TheatreDAO;
-import com.cinosphere.model.MovieModel;
-import com.cinosphere.model.ScreenModel;
-import com.cinosphere.model.ShowtimeModel;
-import com.cinosphere.model.TheatreModel;
 /**
- * Service class for schedule operation
- * Contains methods to create Date strip, and create Schedules
- * 
- * @author Raunit Giri
+ * Builds the schedule page data.
+ *
+ * Changes from original SchedulesService:
+ *  - Accepts a ScheduleFilterRequest DTO instead of five raw String parameters.
+ *  - Returns a typed ScheduleResponse DTO instead of a raw Map<String,Object>
+ *    with an encoded String for hall data — the old String format
+ *    ("City — Screen — Type|10:30 AM.5,12:00 PM.6|3") was fragile and hard
+ *    to consume on the client side.
+ *  - Injected repositories instead of new *DAO() instances.
+ *  - Private helper methods retained but simplified now that the result
+ *    is built as proper objects rather than concatenated strings.
  */
+@Service
 public class SchedulesService {
-	private ShowtimeDAO showtimeDAO = new ShowtimeDAO();
-	private MovieDAO    movieDAO    = new MovieDAO();
-	private ScreenDAO   screenDAO   = new ScreenDAO();
-	private TheatreDAO theatreDAO = new TheatreDAO();
-	/**
-	 * Creates List of maped String containging details to create Date card
-	 * @return List of Map String
-	 */
-	public List<Map<String, String>> getDateStrip() {
-		List<Map<String, String>> dateList = new ArrayList<>();
-		LocalDate today    = LocalDate.now();
-		DateTimeFormatter dayFmt   = DateTimeFormatter.ofPattern("EEE");
-		DateTimeFormatter monthFmt = DateTimeFormatter.ofPattern("MMM");
 
-		for (int i = 0; i < 14; i++) {
-			LocalDate d = today.plusDays(i);
-			Map<String, String> dateMap = new LinkedHashMap<>();
-			dateMap.put("value",  d.toString());
-			dateMap.put("day",    d.format(dayFmt).toUpperCase());
-			dateMap.put("number", String.valueOf(d.getDayOfMonth()));
-			dateMap.put("month",  d.format(monthFmt).toUpperCase());
-			dateList.add(dateMap);
-		}
-		return dateList;
-	}
-	
-	
-	/**
-	 * Using the filters creates Object with values to create a schedule Card
-	 * Uses multiple helper method
-	 * @param selectedDate
-	 * @param timeFilter
-	 * @param formatFilter
-	 * @param langFilter
-	 * @param movieSearch
-	 * @return Map<String, Object> which contains movieList and hallsList
-	 * @throws Exception
-	 */
-	public Map<String, Object> getSchedules(String selectedDate, String timeFilter, String formatFilter, String langFilter, String movieSearch, String locationFilter) throws Exception {
+    @Autowired private ShowtimeRepository showtimeRepository;
+    @Autowired private MovieRepository    movieRepository;
+    @Autowired private ScreenRepository   screenRepository;
+    @Autowired private TheatreRepository  theatreRepository;
 
-		
-		List<ShowtimeModel> filteredShowtimes =getFilteredShowtimes(selectedDate, timeFilter, formatFilter);
-		
-		Map<Integer, List<ShowtimeModel>> byMovie =groupShowtimesByMovie(filteredShowtimes);
-		
-		List<MovieModel> movieList =createMovieList(byMovie, langFilter, movieSearch,locationFilter);
-		
-		List<String> hallsList =createHallsList(byMovie, langFilter, movieSearch,locationFilter);
-		
-		Map<String, Object> result = new LinkedHashMap<>();result.put("movieList", movieList);result.put("hallsList", hallsList);
-	
-	return result;
-	}
-	/**
-	 * Helper method to get showtimes using filter
-	 * @param selectedDate
-	 * @param timeFilter
-	 * @param formatFilter
-	 * @return SHowtime List
-	 * @throws Exception
-	 */
-	private List<ShowtimeModel> getFilteredShowtimes(String selectedDate, String timeFilter, String formatFilter) throws Exception {
-		
-		LocalDate date = LocalDate.parse(selectedDate);
-		List<ShowtimeModel> showtimes = showtimeDAO.findByDate(date.isBefore(LocalDate.now())?LocalDate.now():date);
-		
-		if (date.equals(LocalDate.now())) {
-	        showtimes = showtimes.stream().filter(st -> st.getStartTime().isAfter(LocalTime.now())).collect(Collectors.toList());
-	    }
-	    if (timeFilter != null && !timeFilter.isEmpty()) {
-	        showtimes = showtimes.stream().filter(st -> matchesTimeFilter(st.getStartTime(), timeFilter)) .collect(Collectors.toList());
-	    }
+    private static final DateTimeFormatter DAY_FMT   = DateTimeFormatter.ofPattern("EEE");
+    private static final DateTimeFormatter MONTH_FMT = DateTimeFormatter.ofPattern("MMM");
 
-	    if (formatFilter != null && !formatFilter.isEmpty() &&!formatFilter.equals("all")) {
-	    	showtimes = showtimes.stream().filter(st -> formatFilter.equalsIgnoreCase(st.getShowType())).collect(Collectors.toList());
-	    }
-	    return showtimes;
-	}
-	/**
-	 * helper method to create map of showtime grouped by movie 
-	 * @param showtimes
-	 * @return Map of movieId, showtime
-	 */
-	private Map<Integer, List<ShowtimeModel>> groupShowtimesByMovie(List<ShowtimeModel> showtimes) {
+    /**
+     * Builds a 14-day date navigation strip starting from today.
+     */
+    public List<DateEntry> getDateStrip() {
+        LocalDate today = LocalDate.now();
+        List<DateEntry> strip = new ArrayList<>();
+        for (int i = 0; i < 14; i++) {
+            LocalDate d = today.plusDays(i);
+            strip.add(new DateEntry(
+                    d.toString(),
+                    d.format(DAY_FMT).toUpperCase(),
+                    d.getDayOfMonth(),
+                    d.format(MONTH_FMT).toUpperCase()
+            ));
+        }
+        return strip;
+    }
 
-	    Map<Integer, List<ShowtimeModel>> mapMovie = new LinkedHashMap<>();
+    /**
+     * Returns the full schedule response for a given filter.
+     */
+    public ScheduleResponse getSchedules(ScheduleFilterRequest filter) {
+        List<ShowtimeModel> showtimes = getFilteredShowtimes(filter);
 
-	    for (ShowtimeModel st : showtimes) {
-	        mapMovie.computeIfAbsent( st.getMovieId(),k -> new ArrayList<>()).add(st);
-	    }
+        // group showtimes by movieId, preserving insertion order
+        Map<Integer, List<ShowtimeModel>> byMovie = showtimes.stream()
+                .collect(Collectors.groupingBy(ShowtimeModel::getMovieId, LinkedHashMap::new, Collectors.toList()));
 
-	    return mapMovie;
-	}
-	/**
-	 * helper method to create movie List wiht filters and maped showtime
-	 * @param byMovie
-	 * @param langFilter
-	 * @param movieSearch
-	 * @return movie List
-	 * @throws Exception
-	 */
-	private List<MovieModel> createMovieList(Map<Integer, List<ShowtimeModel>> mapMovie,String langFilter,String movieSearch,String locationFilter) throws Exception {
+        List<MovieSchedule> schedules = buildMovieSchedules(byMovie, filter);
 
-		List<MovieModel> movieList = new ArrayList<>();
+        ScheduleResponse response = new ScheduleResponse();
+        response.setDateStrip(getDateStrip());
+        response.setSchedules(schedules);
+        return response;
+    }
 
-	    for (Map.Entry<Integer, List<ShowtimeModel>> movieEntry : mapMovie.entrySet()) {
+    // ---- private helpers ----
 
-	        MovieModel movie = movieDAO.findById(movieEntry.getKey());
-	        if(movie.getMovieStatus().equals("ARCHIVE")) continue;
+    private List<ShowtimeModel> getFilteredShowtimes(ScheduleFilterRequest filter) {
+        List<ShowtimeModel> showtimes = showtimeRepository
+                .findByShowDate(LocalDate.parse(filter.getSelectedDate()));
 
-	        if (langFilter != null && !langFilter.isEmpty() && !movie.getMovieLanguage().equalsIgnoreCase(langFilter)) continue;
+        if (filter.getTimeFilter() != null && !filter.getTimeFilter().isEmpty()) {
+            showtimes = showtimes.stream()
+                    .filter(st -> matchesTimeFilter(st.getStartTime(), filter.getTimeFilter()))
+                    .collect(Collectors.toList());
+        }
 
-	        if ("ARCHIVE".equals(movie.getMovieStatus())) continue;
-	        
-	        if (movieSearch != null && !movieSearch.trim().isEmpty() && !movie.getMovieName().toLowerCase().contains(movieSearch.trim().toLowerCase())) continue;
+        if (filter.getFormatFilter() != null &&
+                !filter.getFormatFilter().isEmpty() &&
+                !filter.getFormatFilter().equalsIgnoreCase("all")) {
+            showtimes = showtimes.stream()
+                    .filter(st -> filter.getFormatFilter().equalsIgnoreCase(st.getShowType()))
+                    .collect(Collectors.toList());
+        }
 
-	        if (locationFilter != null && !locationFilter.isEmpty() && !locationFilter.equals("all")) {
-	            boolean hasMatchingHall = false;
-	            for (ShowtimeModel st : movieEntry.getValue()) {
-	                ScreenModel screen = screenDAO.findByScreenId(st.getScreenId());
-	                TheatreModel theatre = theatreDAO.findById(screen.getTheatreId());
-	                if (theatre.getCity().equalsIgnoreCase(locationFilter)) {
-	                    hasMatchingHall = true;
-	                    break;
-	                }
-	            }
-	            if (!hasMatchingHall) continue;
-	        }
+        return showtimes;
+    }
 
-	        movieList.add(movie);
-	    }
+    private List<MovieSchedule> buildMovieSchedules(
+            Map<Integer, List<ShowtimeModel>> byMovie, ScheduleFilterRequest filter) {
 
-	    return movieList;
-	}
-	/**
-	 * helper method to create String of details needed to construct Schedule cards
-	 * @param byMovie
-	 * @param langFilter
-	 * @param movieSearch
-	 * @return String List
-	 * @throws Exception
-	 */
-	private List<String> createHallsList( Map<Integer, List<ShowtimeModel>> mapMovie, String langFilter,String movieSearch,String locationFilter) throws Exception{
+        List<MovieSchedule> result = new ArrayList<>();
 
-	    List<String> hallsList = new ArrayList<>();
-	    DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("h:mm a");
+        for (Map.Entry<Integer, List<ShowtimeModel>> entry : byMovie.entrySet()) {
+            MovieModel movie = movieRepository.findById(entry.getKey()).orElse(null);
+            if (movie == null || "ARCHIVE".equals(movie.getMovieStatus())) continue;
 
-	    for (Map.Entry<Integer,List<ShowtimeModel>> movieEntry : mapMovie.entrySet()) {
+            // language filter
+            if (filter.getLangFilter() != null && !filter.getLangFilter().isEmpty() &&
+                    !movie.getMovieLanguage().equalsIgnoreCase(filter.getLangFilter())) continue;
 
-	        MovieModel movie =movieDAO.findById(movieEntry.getKey());
+            // keyword search
+            if (filter.getMovieSearch() != null && !filter.getMovieSearch().trim().isEmpty() &&
+                    !movie.getMovieName().toLowerCase()
+                            .contains(filter.getMovieSearch().trim().toLowerCase())) continue;
 
-	        if (langFilter != null && !langFilter.isEmpty() &&!movie.getMovieLanguage().equalsIgnoreCase(langFilter)) continue;
+            List<HallSchedule> halls = buildHallSchedules(entry.getValue(), filter.getLocationFilter());
+            if (halls.isEmpty()) continue;  // all halls filtered out by location — skip the movie
 
-	        if (movieSearch != null &&!movieSearch.trim().isEmpty() &&!movie.getMovieName() .toLowerCase() .contains(movieSearch.trim().toLowerCase())) continue;
+            MovieSchedule schedule = new MovieSchedule();
+            schedule.setMovieId(movie.getMovieId());
+            schedule.setMovieName(movie.getMovieName());
+            schedule.setGenre(movie.getGenre());
+            schedule.setMovieLanguage(movie.getMovieLanguage());
+            schedule.setAgeRating(movie.getAgeRating());
+            schedule.setDuration(movie.getDuration());
+            schedule.setHalls(halls);
+            result.add(schedule);
+        }
 
-	        Map<Integer, List<ShowtimeModel>> byScreen = new LinkedHashMap<>();
+        return result;
+    }
 
-	        for (ShowtimeModel st : movieEntry.getValue()) {
-	        	byScreen.computeIfAbsent( st.getScreenId(), k -> new ArrayList<>()).add(st);
-	        }        
-	        StringBuilder halls = new StringBuilder();
+    private List<HallSchedule> buildHallSchedules(
+            List<ShowtimeModel> showtimes, String locationFilter) {
 
-	        for (Map.Entry<Integer,List<ShowtimeModel>> screenEntry : byScreen.entrySet()) {
+        // group by screenId
+        Map<Integer, List<ShowtimeModel>> byScreen = showtimes.stream()
+                .collect(Collectors.groupingBy(ShowtimeModel::getScreenId, LinkedHashMap::new, Collectors.toList()));
 
-	            ScreenModel screen =screenDAO.findByScreenId(screenEntry.getKey());
-	            TheatreModel theatre = theatreDAO.findById(screen.getTheatreId());
-	            
-	            if (locationFilter != null && !locationFilter.isEmpty() && !locationFilter.equals("all") && !theatre.getCity().equalsIgnoreCase(locationFilter)) continue;
-	            String hallLabel = theatre.getCity()+ " — " +screen.getScreenName() + " — " + screen.getScreenType();
+        List<HallSchedule> halls = new ArrayList<>();
 
-	            String times = screenEntry.getValue().stream().map(st -> st.getStartTime().format(timeFmt)+ "." +st.getShowtimeId()).collect( Collectors.joining(","));
-	            
-	            if (halls.length() > 0)
-	                halls.append(";");
+        for (Map.Entry<Integer, List<ShowtimeModel>> entry : byScreen.entrySet()) {
+            ScreenModel screen = screenRepository.findById(entry.getKey()).orElse(null);
+            if (screen == null) continue;
 
-	            halls.append(hallLabel).append("|").append(times).append("|").append(screen.getScreenId());
-	        }
-	        System.out.print(halls);
-	        
-	        hallsList.add(halls.toString());
-	    }
-	    
-	    return hallsList;
-	}
-	
-	/**
-	 * @param time   showtime start time
-	 * @param filter value from <select name="timeFilter">
-	 * @return boolean
-	 */
-	private boolean matchesTimeFilter(LocalTime time, String filter) {
-		switch (filter) {
-			case "morning":   
-				return time.isBefore(LocalTime.NOON);
-			case "afternoon": 
-				return !time.isBefore(LocalTime.NOON) && time.isBefore(LocalTime.of(17, 0));
-			case "evening":   
-				return !time.isBefore(LocalTime.of(17, 0))&& time.isBefore(LocalTime.of(21, 0));
-			case "night":    
-				return !time.isBefore(LocalTime.of(21, 0));
-			default:          
-				return true;
-		}
-	}
+            TheatreModel theatre = theatreRepository.findById(screen.getTheatreId()).orElse(null);
+            if (theatre == null) continue;
+
+            // location filter
+            if (locationFilter != null && !locationFilter.isEmpty() &&
+                    !locationFilter.equalsIgnoreCase("all") &&
+                    !theatre.getCity().equalsIgnoreCase(locationFilter)) continue;
+
+            List<ShowtimeSlot> slots = entry.getValue().stream().map(st -> {
+                ShowtimeSlot slot = new ShowtimeSlot();
+                slot.setShowtimeId(st.getShowtimeId());
+                slot.setStartTime(st.getStartTime());
+                slot.setEndTime(st.getEndTime());
+                return slot;
+            }).collect(Collectors.toList());
+
+            HallSchedule hall = new HallSchedule();
+            hall.setScreenId(screen.getScreenId());
+            hall.setScreenName(screen.getScreenName());
+            hall.setScreenType(screen.getScreenType());
+            hall.setCity(theatre.getCity());
+            hall.setShowtimes(slots);
+            halls.add(hall);
+        }
+
+        return halls;
+    }
+
+    private boolean matchesTimeFilter(LocalTime time, String filter) {
+        return switch (filter) {
+            case "morning"   -> time.isBefore(LocalTime.NOON);
+            case "afternoon" -> !time.isBefore(LocalTime.NOON) && time.isBefore(LocalTime.of(17, 0));
+            case "evening"   -> !time.isBefore(LocalTime.of(17, 0)) && time.isBefore(LocalTime.of(21, 0));
+            case "night"     -> !time.isBefore(LocalTime.of(21, 0));
+            default          -> true;
+        };
+    }
 }

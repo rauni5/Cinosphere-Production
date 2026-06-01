@@ -1,5 +1,6 @@
 package com.cinosphere.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import jakarta.persistence.*;
@@ -27,7 +28,7 @@ public class BookingModel {
     private String bookingStatus;
 
     @Column(name = "total_amount")
-    private double totalAmount;
+    private BigDecimal totalAmount;
 
     @Column(name = "booking_channel")
     private String bookingChannel;
@@ -129,7 +130,7 @@ public class BookingModel {
      * 
      * @return double
      */
-    public double getTotalAmount() { 
+    public BigDecimal getTotalAmount() { 
     	return totalAmount; 
     }
 
@@ -138,7 +139,7 @@ public class BookingModel {
      * 
      * @param totalAmount
      */
-    public void setTotalAmount(double totalAmount) { 
+    public void setTotalAmount(BigDecimal totalAmount) { 
     	this.totalAmount = totalAmount; 
     }
 

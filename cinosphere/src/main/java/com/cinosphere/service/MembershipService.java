@@ -1,60 +1,47 @@
 package com.cinosphere.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.cinosphere.dao.MembershipDAO;
 import com.cinosphere.model.MembershipModel;
 import com.cinosphere.model.UsersModel;
+import com.cinosphere.repository.MembershipRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
- * Service Class that is the bridge between Servlet and MembershipDAO
- * Contains methods used to call methods of DAO and perform interaction with DB Membership Table
- * 
- * @author Raunit Giri
+ * Handles membership queries and loyalty point updates.
+ *
+ * Changes from original MembershipService:
+ *  - No HttpServletRequest parameter — no HTTP concerns here.
+ *  - getMemberships(List<UsersModel>) simplified with a stream.
+ *  - Injected MembershipRepository instead of new MembershipDAO().
  */
+@Service
 public class MembershipService {
-	private MembershipDAO membershipDAO = new MembershipDAO();
-	/**
-	 * Finds membership using userID
-	 * @param userId
-	 * @return membership
-	 * @throws Exception
-	 */
-	public MembershipModel getByUserId(int userId) throws Exception {
 
-			return membershipDAO.findByUserId(userId);
+    @Autowired
+    private MembershipRepository membershipRepository;
 
+    public MembershipModel getByUserId(int userId) {
+        return membershipRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Membership not found for user: " + userId));
+    }
 
-}
-	
-	/**
-	 * Finds memberships of all users given
-	 * @param users
-	 * @return membership List
-	 * @throws Exception
-	 */
-	public List<MembershipModel> getMemberships(List<UsersModel> users) throws Exception {
-		List<MembershipModel> memberships = new ArrayList<>();
-		
-		for(UsersModel user: users) {
-			
-			MembershipModel membership = membershipDAO.findByUserId(user.getUserId());
-			
-			memberships.add(membership);
-		}
-		
-		return memberships;
-		
-	}
-	
-/**
- * Update loyalty points of membership using userId
- * @param userId
- * @param newPoints
- * @throws Exception
- */
-	public void updateMembershipLoyaltyPoints(int userId, int newPoints) throws Exception {
-		membershipDAO.updateMembershipLoyaltyPoints(userId, newPoints);
-		
-	}
+    /**
+     * Fetches memberships for a list of users in one go.
+     * Missing memberships are silently skipped (orElse(null) + filter).
+     */
+    public List<MembershipModel> getMemberships(List<UsersModel> users) {
+        return users.stream()
+                .map(u -> membershipRepository.findByUserId(u.getUserId()).orElse(null))
+                .filter(m -> m != null)
+                .collect(Collectors.toList());
+    }
+
+    public void updateLoyaltyPoints(int userId, int newPoints) {
+        MembershipModel membership = getByUserId(userId);
+        membership.setTotalLoyaltyPoints(newPoints);
+        membershipRepository.save(membership);
+    }
 }

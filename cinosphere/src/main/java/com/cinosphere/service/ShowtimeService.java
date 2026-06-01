@@ -1,70 +1,54 @@
 package com.cinosphere.service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import com.cinosphere.dto.ShowtimeRequest;
+import com.cinosphere.model.ShowtimeModel;
+import com.cinosphere.repository.ShowtimeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-import com.cinosphere.dao.ShowtimeDAO;
-import com.cinosphere.model.ShowtimeModel;
 /**
- * Service Class that is the bridge between Servlet and ShotimeDAO
- * Contains methods used to call methods of DAO and perform interaction with DB Showtime Table
- * 
- * @author Raunit Giri
+ * Handles showtime CRUD.
+ *
+ * Changes from original ShowtimeService:
+ *  - Accepts ShowtimeRequest DTO instead of individual parameters.
+ *  - insertShowtime() returns the saved entity (with its generated ID)
+ *    instead of a boolean.
+ *  - Injected ShowtimeRepository instead of new ShowtimeDAO().
  */
+@Service
 public class ShowtimeService {
-	private ShowtimeDAO showtimeDAO = new ShowtimeDAO();
-	/**
-	 * Finds showtime using Id
-	 * @param showtimeId
-	 * @return Showtime
-	 * @throws Exception
-	 */
-	public ShowtimeModel getShowtimeById(int showtimeId) throws Exception{
-			return showtimeDAO.findByShowtimeId(showtimeId);
 
-	}
-	/**
-	 * Finds showtimes using ScreenId
-	 * @param screenId
-	 * @return Showtime List
-	 * @throws Exception
-	 */
-	public List<ShowtimeModel> getShowtimesByScreenId(int screenId) throws Exception {
-		return showtimeDAO.findByScreenId(screenId);
-	}
-	/**
-	 * Finds SHowtimes using movieId
-	 * @param movieId
-	 * @return SHowtime List
-	 * @throws Exception
-	 */
-	public List<ShowtimeModel> getShowtimesByMovieId(int movieId) throws Exception {
-		return showtimeDAO.findByMovieId(movieId);
-	}
-	/**
-	 *  Creates new showtime using details provided
-	 * @param screenId
-	 * @param movieId
-	 * @param showDate
-	 * @param startTime
-	 * @param endTime
-	 * @param showStatus
-	 * @param showType
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public boolean insertShowtime(int screenId, int movieId, LocalDate showDate, LocalTime startTime, LocalTime endTime, String showStatus, String showType) throws Exception {
-		return showtimeDAO.insert(screenId, movieId, showDate, startTime, endTime, showStatus, showType);
-	}
-	/**
-	 * Removes showtime record using movieId
-	 * @param movieId
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public boolean deleteShowtimesByMovieId(int movieId) throws Exception {
-		return showtimeDAO.deleteByMovieId(movieId);
-		
-	}
+    @Autowired
+    private ShowtimeRepository showtimeRepository;
+
+    public ShowtimeModel getShowtimeById(int showtimeId) {
+        return showtimeRepository.findById(showtimeId)
+                .orElseThrow(() -> new IllegalArgumentException("Showtime not found: " + showtimeId));
+    }
+
+    public List<ShowtimeModel> getShowtimesByScreenId(int screenId) {
+        return showtimeRepository.findByScreenId(screenId);
+    }
+
+    public List<ShowtimeModel> getShowtimesByMovieId(int movieId) {
+        return showtimeRepository.findByMovieId(movieId);
+    }
+
+    public ShowtimeModel createShowtime(ShowtimeRequest request) {
+        ShowtimeModel showtime = new ShowtimeModel();
+        showtime.setScreenId(request.getScreenId());
+        showtime.setMovieId(request.getMovieId());
+        showtime.setShowDate(request.getShowDate());
+        showtime.setStartTime(request.getStartTime());
+        showtime.setEndTime(request.getEndTime());
+        showtime.setShowStatus(request.getShowStatus());
+        showtime.setShowType(request.getShowType());
+        return showtimeRepository.save(showtime);
+    }
+
+    public void deleteShowtimesByMovieId(int movieId) {
+        showtimeRepository.deleteByMovieId(movieId);
+    }
 }

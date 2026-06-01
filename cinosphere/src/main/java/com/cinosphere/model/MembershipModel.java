@@ -1,5 +1,7 @@
 package com.cinosphere.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
 
 /**
@@ -25,8 +27,8 @@ public class MembershipModel {
     @Column(name = "total_loyalty_points")
     private int totalLoyaltyPoints;
 
-    @Column(name = "discount_percentage")
-    private double discountPercentage;
+    @Column(name = "discount_percentage", precision = 5, scale = 2)
+    private BigDecimal discountPercentage;
     /**
      * Returns the unique membership ID.
      * 
@@ -122,7 +124,7 @@ public class MembershipModel {
      * 
      * @return double
      */
-    public double getDiscountPercentage() { 
+    public BigDecimal getDiscountPercentage() { 
     	return discountPercentage; 
     }
 
@@ -131,7 +133,7 @@ public class MembershipModel {
      * 
      * @param discountPercentage
      */
-    public void setDiscountPercentage(double discountPercentage) { 
+    public void setDiscountPercentage(BigDecimal discountPercentage) { 
     	this.discountPercentage = discountPercentage;
     }
 }

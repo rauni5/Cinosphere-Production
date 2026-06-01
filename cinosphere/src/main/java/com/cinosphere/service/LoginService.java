@@ -1,93 +1,58 @@
 package com.cinosphere.service;
-import com.cinosphere.dao.UsersDAO;
-import com.cinosphere.model.UsersModel;
-import com.cinosphere.utils.CookieUtil;
-import com.cinosphere.utils.PasswordUtil;
-import com.cinosphere.utils.SessionUtil;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.cinosphere.dto.LoginRequest;
+import com.cinosphere.dto.LoginResponse;
+import com.cinosphere.model.UsersModel;
+import com.cinosphere.repository.UserRepository;
+import com.cinosphere.util.JwtUtil;
+import com.cinosphere.util.PasswordUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
- * Service class to handle login operation
- * Contains methods for authentication, add user to session and Cookie interactions
- * 
- * @author Raunit Giri
- * 
+ * Handles user authentication.
+ *
+ * Changes from original LoginService:
+ *  - No HttpServletRequest / HttpServletResponse parameters anywhere.
+ *  - No SessionUtil or CookieUtil — auth state lives in the JWT returned to the client.
+ *  - Returns a typed LoginResponse DTO instead of a raw "Success" / error String.
+ *  - Injected UserRepository instead of new UsersDAO().
  */
+@Service
 public class LoginService {
 
-	private UsersDAO userDAO = new UsersDAO();
-	/**
-	 * Check if username exists and password matches.
-	 * if match found calls login method with userData and request
-	 * @param username
-	 * @param password
-	 * @param request
-	 * @return
-	 */
-	public String authenticate(String username,String password,HttpServletRequest request) {
-		if (username == null || username.trim().isEmpty()) {
-            return "Username is required";
-        }
-        if (password == null || password.isEmpty()) {
-            return "Password is required";
-        }
-        try {
-            UsersModel user = userDAO.findByUsername(username);
-            if (user == null) {
-                return "User doesn't exists";
-            }
-            if(!user.getisActive()) {
-            	 return "Wait for Admin to verify";
-            }
+    @Autowired
+    private UserRepository userRepository;
 
-            // Verify the password using PAsswordUtil
-            if (PasswordUtil.checkPassword(password, user.getHashPassword())) {
-                return login(user,request);
-            } 
-            else {
-                return "Password is incorrect";
-            }
+    @Autowired
+    private JwtUtil jwtUtil;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Service unavailable";
+    /**
+     * Authenticates credentials and returns a LoginResponse containing a JWT
+     * on success, or throws an IllegalArgumentException with the error message
+     * on failure (the controller catches this and returns 401).
+     */
+    public LoginResponse authenticate(LoginRequest request) {
+        UsersModel user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new IllegalArgumentException("User doesn't exist"));
+
+        if (!user.getisActive()) {
+            throw new IllegalArgumentException("Account pending admin approval");
         }
-	}
-	/**
-	 * Use user data to create session on current request
-	 * @param userData
-	 * @param request
-	 * @return
-	 */
-	public String login(UsersModel userData,HttpServletRequest request){
-		try {  	
-    	SessionUtil.setAttribute(request, "user", userData, 3600);
-    	return "Success";
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return "Service unavailable";
-		}
 
-	}
-	/**
-	 * Create a cookie of latest login username
-	 * @param response
-	 * @param userName
-	 * @param time
-	 */
-	public void createLoginCookie(HttpServletResponse response,String username,int time) {
-		CookieUtil.addCookie(response, "username", username, time);
-	}
-	/**
-	 * Finds value of login cookie
-	 * @param request
-	 * @param name
-	 * @return
-	 */
-	public String getLoginCookie(HttpServletRequest request,String name) {
-		return CookieUtil.getCookieValue(request, name);
-	}
+        if (!PasswordUtil.checkPassword(request.getPassword(), user.getHashPassword())) {
+            throw new IllegalArgumentException("Password is incorrect");
+        }
+
+        String token = jwtUtil.generateToken(user.getUserId(),user.getUsername(), user.getUserRole());
+
+        return new LoginResponse(
+                token,
+                user.getUserId(),
+                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getUserRole()
+        );
+    }
 }

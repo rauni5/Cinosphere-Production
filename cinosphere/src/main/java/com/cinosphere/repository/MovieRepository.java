@@ -2,17 +2,14 @@ package com.cinosphere.repository;
 
 import com.cinosphere.model.MovieModel;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public interface MovieRepository extends JpaRepository<MovieModel, Integer> {
 
     // ========== BASIC FINDERS ==========
-
-    Optional<MovieModel> findByMovieId(int movieId);
-
     List<MovieModel> findByGenre(String genre);
 
     List<MovieModel> findByMovieLanguage(String movieLanguage);
@@ -41,7 +38,17 @@ public interface MovieRepository extends JpaRepository<MovieModel, Integer> {
 
     List<MovieModel> findByMovieStatusNot(String movieStatus);
 
-    // ========== INSERT + UPDATE ==========
-
-    // handled automatically via save()
+    @Query("""
+        SELECT m FROM MovieModel m
+        WHERE (:language IS NULL OR m.movieLanguage = :language)
+        AND (:genre IS NULL OR m.genre = :genre)
+        AND (:status IS NULL OR m.movieStatus = :status)
+        AND (:keyword IS NULL OR LOWER(m.movieName) LIKE LOWER(CONCAT('%', :keyword, '%')))
+    """)
+    List<MovieModel> findByFilters(
+            @Param("language") String language,
+            @Param("genre") String genre,
+            @Param("status") String status,
+            @Param("keyword") String keyword
+    );
 }

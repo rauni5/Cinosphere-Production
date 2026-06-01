@@ -1,22 +1,32 @@
 package com.cinosphere.service;
 
-import com.cinosphere.dao.TheatreDAO;
 import com.cinosphere.model.TheatreModel;
+import com.cinosphere.repository.TheatreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 /**
- * Service Class that is the bridge between Servlet and TheatreDAO
- * Contains methods used to call methods of DAO and perform interaction with DB Theatre Table
- * 
- * @author Raunit Giri
+ * Handles theatre queries.
+ *
+ * Changes from original TheatreService:
+ *  - Added getAll() — needed by AdminController for dropdowns.
+ *  - Throws IllegalArgumentException instead of returning null.
+ *  - Injected TheatreRepository instead of new TheatreDAO().
  */
+@Service
 public class TheatreService {
-	private TheatreDAO theatreDAO = new TheatreDAO();
-	/**
-	 * Finds theatre by Id
-	 * @param theatreId
-	 * @return Theatre
-	 * @throws Exception
-	 */
-	public TheatreModel getTheatreById(int theatreId) throws Exception {
-		return theatreDAO.findById(theatreId);
-	}
+
+    @Autowired
+    private TheatreRepository theatreRepository;
+
+    public TheatreModel getTheatreById(int theatreId) {
+        return theatreRepository.findById(theatreId)
+                .orElseThrow(() -> new IllegalArgumentException("Theatre not found: " + theatreId));
+    }
+
+    public List<TheatreModel> getAllTheatres() {
+        return theatreRepository.findAll();
+    }
 }
