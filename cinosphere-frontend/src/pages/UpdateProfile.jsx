@@ -128,7 +128,7 @@ export default function UpdateProfile() {
             <div className="update_profile_overview_card">
               <div className="update_profile_avatar_wrapper">
                 <div className="update_profile_avatar_circle">
-                  <img src={`x`} alt="avatar"
+                  <img src={`/api/uploads/profiles/${user?.userId}`} alt="avatar"
                     onError={e => e.target.style.display = 'none'} />
                 </div>
               </div>

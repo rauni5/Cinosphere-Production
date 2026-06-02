@@ -15,7 +15,10 @@ export default function Header() {
       <nav className="navigation_container">
 
         <Link to="/" className="navigation_brand">
-          <span className="navigation_logo_text">CinoSphere</span>
+          <img
+                src={`/api/uploads/logo/logo`}
+                className="navigation_logo"
+              />
         </Link>
 
         <ul className="navigation_menu">

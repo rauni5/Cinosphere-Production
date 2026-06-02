@@ -28,7 +28,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/movies/**").permitAll()
                 .requestMatchers("/api/schedules/**").permitAll()
-                // Admin-only endpoints
+                .requestMatchers("/api/uploads/**").permitAll()
+                .requestMatchers("/uploads/**").permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 // Everything else requires login
                 .anyRequest().authenticated()

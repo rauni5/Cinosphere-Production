@@ -36,7 +36,7 @@ export default function MovieCard({ movie }) {
         </div>
 
         <img
-          src={null}
+          src={`/api/uploads/movies/${movieId}`}
           alt={`${movieName} poster`}
           className="movie_poster_image_element"
           onError={(e) => {
@@ -83,7 +83,7 @@ export default function MovieCard({ movie }) {
             className="movie_quick_view_icon_wrapper"
             onClick={(e) => {
               e.stopPropagation()
-              navigate(`/movies/?${movieId}`)
+              navigate(`/movies/${movieId}`)
             }}
           >
             <img

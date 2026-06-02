@@ -37,7 +37,7 @@ export default function MovieDetail() {
         <div className="detail_hero">
           <div className="detail_hero_background">
             <img
-              src={`/uploads/movies/bg_${movie.movieId}.jpg`}
+              src={`/api/uploads/movies/background/${movie.movieId}`}
               alt={`${movie.movieName} background`}
               className="detail_hero_background_poster"
             />
@@ -45,7 +45,7 @@ export default function MovieDetail() {
           <div className="detail_hero_content">
             <div className="detail_poster">
               <img
-                src={`/uploads/movies/poster_${movie.movieId}.jpg`}
+                src={`/api/uploads/movies/${movie.movieId}`}
                 alt={`${movie.movieName} poster`}
                 className="detail_poster_image"
               />

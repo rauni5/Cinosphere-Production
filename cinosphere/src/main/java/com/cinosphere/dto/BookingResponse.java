@@ -21,7 +21,7 @@ public class BookingResponse {
 
     // Enriched showtime info so the client can display confirmation details
     private int showtimeId;
-    private String movieName;
+    private int movieId;
     private LocalDate showDate;
     private LocalTime startTime;
     private String screenName;
@@ -72,8 +72,8 @@ public class BookingResponse {
     public int getShowtimeId()                 { return showtimeId; }
     public void setShowtimeId(int v)           { this.showtimeId = v; }
 
-    public String getMovieName()               { return movieName; }
-    public void setMovieName(String v)         { this.movieName = v; }
+    public int getMovieId()               { return movieId; }
+    public void setMovieId(int v)         { this.movieId = v; }
 
     public LocalDate getShowDate()             { return showDate; }
     public void setShowDate(LocalDate v)       { this.showDate = v; }

@@ -15,7 +15,7 @@ export default function ScheduleCard({ movie, halls, date }) {
         
         <div className="schedules_row_poster">
           <img
-            src={`/uploads/movies/poster_${movie.movieId}.jpg`}
+            src={`/api/uploads/movies/${movie.movieId}`}
             alt={`${movie.movieName} poster`}
             className="movie_poster_image_element"
           />

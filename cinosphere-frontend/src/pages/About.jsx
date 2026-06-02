@@ -248,7 +248,7 @@ export default function About() {
 
             <div className="leadership_team_card">
               <div className="leadership_team_avatar">
-                <img src="/x" alt="Aditya Raut" />
+                <img src="/api/uploads/profiles/aditya" alt="Aditya Raut" />
               </div>
 
               <div className="leadership_team_name">
@@ -265,9 +265,8 @@ export default function About() {
             </div>
             <div className="leadership_team_card">
               <div className="leadership_team_avatar">
-                <img src="x" alt="Raunit Giri" />
+                <img src="/api/uploads/profiles/5" alt="Raunit Giri" />
               </div>
-
               <div className="leadership_team_name">
                 Raunit Giri
               </div>
@@ -282,7 +281,7 @@ export default function About() {
             </div>
             <div className="leadership_team_card">
               <div className="leadership_team_avatar">
-                <img src="x" alt="Milan Lama" />
+                <img src="/api/uploads/profiles/milan" alt="Milan Lama" />
               </div>
 
               <div className="leadership_team_name">

@@ -7,7 +7,10 @@ export default function Footer() {
         <div className="footer_content">
 
           <div className="footer_brand">
-            <span className="footer_logo_text">CinoSphere</span>
+            <img
+                src={`/api/uploads/logo/logo`}
+                className="navigation_logo"
+              />
           </div>
 
           <div className="footer_navigation_group">

@@ -112,7 +112,6 @@ public class ImageController {
     public ResponseEntity<byte[]> serveMovieImage(
             @PathVariable String filename) throws IOException {
 
-        // Strip extension to get prefix (e.g. "raunit.jpg" → "raunit")
         String prefix = filename.contains(".")
                 ? filename.substring(0, filename.lastIndexOf('.'))
                 : filename;
@@ -131,4 +130,48 @@ public class ImageController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .body(bytes);
     }
+    @GetMapping(value = "/api/uploads/movies/background/{filename:.+}")
+        public ResponseEntity<byte[]> serveMovieBackground(
+                @PathVariable String filename) throws IOException {
+
+            String prefix = filename.contains(".")
+                    ? filename.substring(0, filename.lastIndexOf('.'))
+                    : filename;
+
+            File imageFile = fileStorageService.resolveFile(FileStorageConfig.BACKGROUND_DIR, prefix);
+
+            if (imageFile == null || !imageFile.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            String contentType = Files.probeContentType(imageFile.toPath());
+            if (contentType == null) contentType = "image/jpeg";
+
+            byte[] bytes = Files.readAllBytes(imageFile.toPath());
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(bytes);
+        }
+        @GetMapping(value = "/api/uploads/logo/{filename:.+}")
+        public ResponseEntity<byte[]> serveLogo(
+                @PathVariable String filename) throws IOException {
+
+            String prefix = filename.contains(".")
+                    ? filename.substring(0, filename.lastIndexOf('.'))
+                    : filename;
+
+            File imageFile = fileStorageService.resolveFile(FileStorageConfig.LOGO_DIR, prefix);
+
+            if (imageFile == null || !imageFile.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            String contentType = Files.probeContentType(imageFile.toPath());
+            if (contentType == null) contentType = "image/jpeg";
+
+            byte[] bytes = Files.readAllBytes(imageFile.toPath());
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(bytes);
+        }
 }

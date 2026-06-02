@@ -240,7 +240,7 @@ public class BookingService {
         response.setLoyaltyPointsEarned(pointsEarned);
         response.setPaymentMethod(request.getPaymentMethod());
         response.setShowtimeId(showtime.getShowtimeId());
-        response.setMovieName(movie != null ? movie.getMovieName() : "");
+        response.setMovieId(movie != null ? movie.getMovieId() : 0);
         response.setShowDate(showtime.getShowDate());
         response.setStartTime(showtime.getStartTime());
         response.setScreenName(screen.getScreenName());
@@ -284,7 +284,7 @@ public class BookingService {
                         res.setShowDate(st.getShowDate());
                         res.setStartTime(st.getStartTime());
                         movieRepository.findById(st.getMovieId())
-                                .ifPresent(m -> res.setMovieName(m.getMovieName()));
+                                .ifPresent(m -> res.setMovieId(m.getMovieId()));
                         screenRepository.findById(st.getScreenId()).ifPresent(sc -> {
                             res.setScreenName(sc.getScreenName());
                             theatreRepository.findById(sc.getTheatreId())
