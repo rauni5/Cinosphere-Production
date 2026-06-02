@@ -1,103 +1,363 @@
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import HeroBanner from '../components/HeroBanner'
 import './css/aboutus.css'
-
-const TECH_ITEMS = [
-  { icon: '🎥', title: 'IMAX Laser Projection', desc: 'The world\'s most advanced film technology. Proprietary dual 4K laser projection system delivering images with unprecedented brightness, clarity and detail, filling screens up to 18,000 sq. ft.' },
-  { icon: '🔊', title: '44.1 kHz IMAX Sound', desc: 'Twelve-channel IMAX digital audio system with custom-tuned speakers — more than 40,000 watts of power designed to fill every seat with uncompromised, crystal-clear sound.' },
-  { icon: '💺', title: 'Ergonomic Seating', desc: 'Custom IMAX-designed stadium seating ensures every audience member has a perfect sightline. Generous spacing, lumbar support, and reclining options for a 3–4 hour experience without fatigue.' },
-]
-
-const SCREENS = [
-  { city: 'Kathmandu', tag: 'FLAGSHIP', desc: 'Our original and largest venue — 18,000 sq. ft. IMAX screen, 44.1 kHz audio, 350+ seats across Standard, Premium & VIP tiers.', status: 'Open' },
-  { city: 'Pokhara',   tag: 'BRANCH',   desc: 'Lakeside cinema overlooking the Annapurna range. Full IMAX experience in a boutique 200-seat auditorium.', status: 'Open' },
-  { city: 'Butwal',    tag: 'COMING',   desc: 'Our newest development — bringing the full CinoSphere IMAX experience to western Nepal for the first time.', status: 'Opening Soon' },
-]
 
 export default function About() {
   return (
     <>
       <Header />
-      <main>
-        <HeroBanner
-          titleMain="Cinema"
-          titleEm="Reimagined"
-          subtitle="We didn't build a cinema. We engineered an obsession."
-        />
 
-        {/* Technology section */}
-        <section className="about_tech_section">
-          <div className="about_section_inner">
-            <div className="about_section_header">
-              <span className="section_eyebrow">The Technology</span>
-              <h2 className="section_display_title">Built for <em>Perfection</em></h2>
-              <p className="about_section_lead">
-                Every component of the CinoSphere experience has been obsessively engineered.
-                From screen geometry to seat foam density — nothing is accidental.
+      <main className="about_screen">
+
+        {/* Hero */}
+        <section className="about_hero_section">
+          <div className="about_hero_overlay"></div>
+
+          <div className="about_hero_container">
+            <div className="about_hero_text_content">
+              <h1 className="about_hero_primary_title">
+                The <em>Vision</em>
+                <br />
+                Behind <em>the Screen</em>
+              </h1>
+
+              <p className="about_hero_subtitle">
+                Born from a vision of world class cinema, experience
+                entertainment beyond the ordinary.
+              </p>
+
+              <div className="about_hero_action_group">
+                <a href="/movies" className="about_hero_button about_hero_button_primary">
+                  Explore Movies
+                </a>
+
+                <a href="#story" className="about_hero_button about_hero_button_secondary">
+                  Our Story
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Statistics */}
+        <section className="about_statistics_section">
+          <div className="accent_line top"></div>
+
+          <div className="about_statistics_header">
+            <span className="about_section_eyebrow">
+              Our Numbers
+            </span>
+
+            <h2 className="about_section_title">
+              The scale of <em>ambition</em>
+            </h2>
+          </div>
+
+          <div className="about_statistics_grid">
+
+            <div className="about_statistics_card">
+              <span className="about_statistics_value">18,000</span>
+              <span className="about_statistics_label">Square Feet</span>
+              <span className="about_statistics_description">
+                The largest screen surface within South Asia.
+              </span>
+            </div>
+
+            <div className="about_statistics_card">
+              <span className="about_statistics_value">44K</span>
+              <span className="about_statistics_label">Watts of Audio</span>
+              <span className="about_statistics_description">
+                12 channels IMAX certified speaker array installed throughout the halls.
+              </span>
+            </div>
+
+            <div className="about_statistics_card">
+              <span className="about_statistics_value">1400+</span>
+              <span className="about_statistics_label">Seats Across Halls</span>
+              <span className="about_statistics_description">
+                Every seat made for comfort with identical sight lines and acoustic balance.
+              </span>
+            </div>
+
+            <div className="about_statistics_card">
+              <span className="about_statistics_value">3</span>
+              <span className="about_statistics_label">Cities by 2027</span>
+              <span className="about_statistics_description">
+                Kathmandu · Pokhara · Butwal
+              </span>
+            </div>
+
+          </div>
+
+          <div className="accent_line bottom"></div>
+        </section>
+
+        {/* Story */}
+        <section className="about_story_section" id="story">
+
+          <div className="about_story_grid">
+
+            <div className="about_story_content">
+
+              <span className="about_section_eyebrow">
+                The Journey
+              </span>
+
+              <h2 className="about_section_title">
+                From <em>an idea</em>
+                <br />
+                to reality
+              </h2>
+
+              <p className="about_story_description">
+                It all started with a conversation in New York after an IMAX
+                screening of Spider-Man: No Way Home. We were blown away and
+                left with a question — why can't we have this in Kathmandu?
+              </p>
+
+              <p className="about_story_description about_story_description_spacing">
+                Two years later, that question became a company. Then a
+                construction site. Then a screen. Then a world class
+                experience.
+              </p>
+
+              <div className="about_story_statistics">
+
+                <div className="about_story_statistic_item">
+                  <span className="about_story_statistic_value">2.4B+</span>
+                  <div className="about_story_statistic_label">
+                    TOTAL INVESTMENT
+                  </div>
+                </div>
+
+                <div className="about_story_statistic_item">
+                  <span className="about_story_statistic_value">500+</span>
+                  <div className="about_story_statistic_label">
+                    TEAM MEMBERS
+                  </div>
+                </div>
+
+                <div className="about_story_statistic_item">
+                  <span className="about_story_statistic_value">3+</span>
+                  <div className="about_story_statistic_label">
+                    OPERATIONAL VENUES
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div className="about_story_timeline">
+
+              <div className="about_story_timeline_item">
+                <span className="about_story_timeline_year">
+                  2023: The Spark
+                </span>
+
+                <div className="about_story_timeline_title">
+                  The Idea
+                </div>
+
+                <p className="about_story_timeline_description">
+                  Founder Aditya Raut and co-founder Raunit Giri watch
+                  Spider-Man NWH in IMAX in New York. On the flight back to
+                  Kathmandu they begin sketching what Nepal's first IMAX
+                  could look like.
+                </p>
+              </div>
+
+              <div className="about_story_timeline_item">
+                <span className="about_story_timeline_year">
+                  The CinoSphere Regime
+                </span>
+
+                <div className="about_story_timeline_title">
+                  CinoSphere Nepal Pvt. Ltd. Incorporated
+                </div>
+
+                <p className="about_story_timeline_description">
+                  The company is registered. The core leadership team is
+                  assembled from cinema operations in Nepal, Singapore and
+                  the UK.
+                </p>
+              </div>
+
+              <div className="about_story_timeline_item">
+                <span className="about_story_timeline_year">
+                  Early 2025: Build
+                </span>
+
+                <div className="about_story_timeline_title">
+                  Construction Begins in Kathmandu
+                </div>
+
+                <p className="about_story_timeline_description">
+                  Ground breaks at Labim Mall, Lalitpur. The auditorium is
+                  engineered to IMAX specifications.
+                </p>
+              </div>
+
+              <div className="about_story_timeline_item">
+                <span className="about_story_timeline_year">
+                  Late 2025: Calibration
+                </span>
+
+                <div className="about_story_timeline_title">
+                  Laser System Commissioned
+                </div>
+
+                <p className="about_story_timeline_description">
+                  Nepal's first certified IMAX screen passes all benchmarks.
+                </p>
+              </div>
+
+              <div className="about_story_timeline_item">
+                <span className="about_story_timeline_year">
+                  2026: A Grand Opening
+                </span>
+
+                <div className="about_story_timeline_title">
+                  CinoSphere Kathmandu Opens Its Doors
+                </div>
+
+                <p className="about_story_timeline_description">
+                  The first public screening takes place and thousands of
+                  guests experience Nepal's first IMAX cinema.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* Leadership Team */}
+        <section className="leadership_team_section">
+          <div className="accent_line top"></div>
+
+          <div className="leadership_team_header">
+            <span className="about_section_eyebrow">
+              Our Team
+            </span>
+
+            <h2 className="about_section_title">
+              Foundational Pillars of <em>CinoSphere</em>
+            </h2>
+          </div>
+
+          <div className="leadership_team_grid">
+
+            <div className="leadership_team_card">
+              <div className="leadership_team_avatar">
+                <img src="/x" alt="Aditya Raut" />
+              </div>
+
+              <div className="leadership_team_name">
+                Aditya Raut
+              </div>
+
+              <span className="leadership_team_role">
+                Full Stack Developer
+              </span>
+
+              <p className="leadership_team_bio">
+                CinoSphere database, UI/UX, frontend and technical documentation engineer.
               </p>
             </div>
-            <div className="about_tech_grid">
-              {TECH_ITEMS.map(item => (
-                <div key={item.title} className="about_tech_card">
-                  <div className="about_tech_icon">{item.icon}</div>
-                  <h3 className="about_tech_title">{item.title}</h3>
-                  <p className="about_tech_desc">{item.desc}</p>
+            <div className="leadership_team_card">
+              <div className="leadership_team_avatar">
+                <img src="x" alt="Raunit Giri" />
+              </div>
+
+              <div className="leadership_team_name">
+                Raunit Giri
+              </div>
+
+              <span className="leadership_team_role">
+                Backend Developer
+              </span>
+
+              <p className="leadership_team_bio">
+                CinoSphere database, backend engineer.
+              </p>
+            </div>
+            <div className="leadership_team_card">
+              <div className="leadership_team_avatar">
+                <img src="x" alt="Milan Lama" />
+              </div>
+
+              <div className="leadership_team_name">
+                Milan lama
+              </div>
+
+              <span className="leadership_team_role">
+                juinor Developer
+              </span>
+
+              <p className="leadership_team_bio">
+                
+              </p>
+            </div>
+
+          </div>
+
+          <div className="accent_line bottom"></div>
+        </section>
+
+        {/* Locations */}
+        <section className="locations_showcase_section">
+
+          <div className="accent_line top"></div>
+
+          <div className="locations_showcase_header">
+            <span className="about_section_eyebrow">
+              Where we are
+            </span>
+
+            <h2 className="about_section_title">
+              Our <em>Locations</em>
+            </h2>
+          </div>
+
+          <div className="locations_showcase_grid">
+
+            <div className="location_card">
+              <div className="location_card_background">
+                <img src="/images/hall1.jpg" alt="Kathmandu" />
+              </div>
+
+              <div className="location_card_overlay"></div>
+
+              <div className="location_card_content">
+
+                <div className="location_status location_status_open">
+                  Operational
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* Screens section */}
-        <section className="about_screens_section">
-          <div className="about_section_inner">
-            <div className="about_section_header">
-              <span className="section_eyebrow">Our Locations</span>
-              <h2 className="section_display_title">The <em>Spheres</em></h2>
-            </div>
-            <div className="about_screens_grid">
-              {SCREENS.map(screen => (
-                <div key={screen.city} className="about_screen_card">
-                  <div className="about_screen_card_top">
-                    <div className="about_screen_city">{screen.city}</div>
-                    <span className={`about_screen_tag ${screen.status === 'Open' ? 'tag_open' : 'tag_soon'}`}>
-                      {screen.status}
-                    </span>
-                  </div>
-                  <span className="about_screen_badge">{screen.tag}</span>
-                  <p className="about_screen_desc">{screen.desc}</p>
+                <div className="location_name">
+                  Kathmandu
                 </div>
-              ))}
+
+                <div className="location_address">
+                  Labim Mall, 3rd Floor, Lalitpur
+                </div>
+
+                <div className="location_chips">
+                  <span className="location_chip">4 Halls</span>
+                  <span className="location_chip">IMAX Laser</span>
+                  <span className="location_chip">800 Seats</span>
+                  <span className="location_chip">Exclusive Lounge Access</span>
+                </div>
+
+              </div>
             </div>
-          </div>
-        </section>
 
-        {/* Stats strip */}
-        <section className="about_stats_section">
-          <div className="about_stats_grid">
-            <div className="about_stat"><span className="about_stat_value">18K</span><span className="about_stat_label">sq. ft. Screen</span></div>
-            <div className="about_stat"><span className="about_stat_value">44K</span><span className="about_stat_label">Watts of Sound</span></div>
-            <div className="about_stat"><span className="about_stat_value">350+</span><span className="about_stat_label">Seats</span></div>
-            <div className="about_stat"><span className="about_stat_value">3</span><span className="about_stat_label">Locations</span></div>
           </div>
-        </section>
 
-        {/* Mission */}
-        <section className="about_mission_section">
-          <div className="about_section_inner about_mission_inner">
-            <span className="section_eyebrow">Our Mission</span>
-            <h2 className="section_display_title">Why We <em>Exist</em></h2>
-            <p className="about_mission_body">
-              Cinema in Nepal deserves the same experience as anywhere in the world. We started CinoSphere
-              because we believe stories told at scale, with perfect sound and image, change the way people
-              feel about film — and about each other. Every design decision we make starts with a single
-              question: does this make the story better?
-            </p>
-          </div>
+          <div className="accent_line bottom"></div>
         </section>
 
       </main>
+
       <Footer />
     </>
   )

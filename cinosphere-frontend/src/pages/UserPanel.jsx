@@ -55,7 +55,7 @@ export default function UserPanel() {
               <div className="footer_divider"></div>
               <div className="sidebar_user_profile">
                 <div className="user_avatar_circle">
-                  <img src={`/uploads/profiles/${user?.userId}.jpg`} alt={user?.firstName}
+                  <img src={`x`} alt={user?.firstName}
                     style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }}
                     onError={e => e.target.style.display = 'none'} />
                 </div>
@@ -136,7 +136,7 @@ export default function UserPanel() {
                   bookings.map(b => (
                     <div key={b.bookingId} className="booking-row">
                       <div className="booking-poster">
-                        <img src={`/uploads/movies/poster_${b.movieId ?? ''}.jpg`}
+                        <img src={`x`}
                           alt={b.movieName} className="booking-poster-image" />
                       </div>
                       <div className="booking-info">

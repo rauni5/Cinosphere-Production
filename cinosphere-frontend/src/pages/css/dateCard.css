@@ -1,4 +1,4 @@
-.schedules_date_pill {
+.date_card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,17 +13,17 @@
     transition: all 0.2s ease;
 }
 
-.schedules_date_pill:hover {
+.date_card:hover {
     border-color: var(--gold-light);
     background: var(--glass-hover);
 }
 
-.schedules_date_pill.active {
+.date_card.active {
     background: rgba(201, 168, 76, 0.06);
     border-color: var(--gold-light);
 }
 
-.schedules_date_pill_day {
+.date_card_day {
     font-family: var(--font-ui);
     font-size: 10px;
     font-weight: 700;
@@ -32,7 +32,7 @@
     color: var(--text-muted);
 }
 
-.schedules_date_pill_num {
+.date_card_number {
     font-family: var(--font-display);
     font-size: 26px;
     font-weight: 300;
@@ -40,7 +40,7 @@
     line-height: 1.1;
 }
 
-.schedules_date_pill_month {
+.date_card_month {
     font-family: var(--font-ui);
     font-size: 10px;
     font-weight: 700;
@@ -50,20 +50,20 @@
     padding-top:3px;
 }
 
-.schedules_date_pill.active .schedules_date_pill_day,
-.schedules_date_pill.active .schedules_date_pill_num,
-.schedules_date_pill.active .schedules_date_pill_month {
+.date_card.active .date_card_day,
+.date_card.active .date_card_num,
+.date_card.active .date_card_month {
     color: var(--gold);
 }
 
 @media (max-width: 768px) {
 
-  .schedules_date_pill {
+  .date_card {
     padding: 8px 16px;
     min-width: 58px;
   }
 
-  .schedules_date_pill_num {
+  .date_card_num {
     font-size: 20px;
   }
 

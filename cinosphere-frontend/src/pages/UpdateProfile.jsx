@@ -121,14 +121,14 @@ export default function UpdateProfile() {
           </section>
 
           <ErrorBox message={error} />
-          {success && <div className="success_box" style={{ margin: '0 2rem 1rem' }}>{success}</div>}
+          {success && <div className="success_box" style={{ margin: '0 2rem 1rem'}}>{success}</div>}
 
           {/* Overview card with points */}
           <section className="update_profile_content_wrapper">
             <div className="update_profile_overview_card">
               <div className="update_profile_avatar_wrapper">
                 <div className="update_profile_avatar_circle">
-                  <img src={`/uploads/profiles/${user?.userId}.jpg`} alt="avatar"
+                  <img src={`x`} alt="avatar"
                     onError={e => e.target.style.display = 'none'} />
                 </div>
               </div>

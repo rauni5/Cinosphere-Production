@@ -6,7 +6,7 @@ import HeroBanner from '../components/HeroBanner'
 import MovieCard from '../components/MovieCard'
 import ErrorBox from '../components/ErrorBox'
 import api from '../api'
-import './css/movies.css';
+import './css/movies.css'
 export default function Movies() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [movies,  setMovies]  = useState([])

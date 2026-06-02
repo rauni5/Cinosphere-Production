@@ -1,5 +1,6 @@
 package com.cinosphere.service;
 
+import com.cinosphere.config.FileStorageConfig;
 import com.cinosphere.dto.MovieRequest;
 import com.cinosphere.model.MovieModel;
 import com.cinosphere.repository.MovieRepository;
@@ -24,7 +25,7 @@ import java.util.List;
 @Service
 public class MovieService {
 
-    private static final String UPLOAD_DIR = "uploads/movies/";
+    private static final String UPLOAD_DIR = FileStorageConfig.POSTER_DIR;
 
     @Autowired
     private MovieRepository movieRepository;

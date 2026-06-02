@@ -43,11 +43,6 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
-    public UsersModel getUserByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-    }
-
     public List<UsersModel> getUsersByStatus(boolean isActive) {
         return userRepository.findByIsActive(isActive);
     }
@@ -70,8 +65,8 @@ public class UserService {
      * Updates first name, last name, email, and date of birth.
      * Does not allow changing username or role.
      */
-    public UsersModel updateProfile(String username, UpdateProfileRequest request) {
-        UsersModel user = getUserByUsername(username);
+    public UsersModel updateProfile(int username, UpdateProfileRequest request) {
+        UsersModel user = getUserById(username);
 
         // if changing email, make sure no one else has it
         if (!user.getEmail().equalsIgnoreCase(request.getEmail()) &&
@@ -93,12 +88,12 @@ public class UserService {
      * Verifies the current password then replaces it with the new one.
      * Moved from UpdatePasswordService; no HttpServletRequest needed.
      */
-    public void updatePassword(String username, UpdatePasswordRequest request) {
+    public void updatePassword(int  username, UpdatePasswordRequest request) {
         if (!request.getNewPassword().equals(request.getConfirmPassword())) {
             throw new IllegalArgumentException("New passwords do not match");
         }
 
-        UsersModel user = getUserByUsername(username);
+        UsersModel user = getUserById(username);
 
         if (!PasswordUtil.checkPassword(request.getCurrentPassword(), user.getHashPassword())) {
             throw new IllegalArgumentException("Current password is incorrect");

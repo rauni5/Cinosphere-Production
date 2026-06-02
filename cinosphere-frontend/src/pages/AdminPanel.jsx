@@ -102,7 +102,7 @@ export default function AdminPanel() {
             <div className="admin_sidebar_footer">
               <div className="admin_profile_card">
                 <div className="admin_profile_avatar">
-                  <img src={`/uploads/profiles/${user?.userId}.jpg`} alt="avatar"
+                  <img src={`x`} alt="avatar"
                     onError={e => e.target.style.display = 'none'} />
                 </div>
                 <div className="admin_profile_details">
@@ -200,7 +200,7 @@ export default function AdminPanel() {
                         <td>
                           <div className="admin_movie_info">
                             <div className="admin_movie_poster">
-                              <img src={`/uploads/movies/poster_${m.movieId}.jpg`} alt={m.movieName} className="admin_movie_poster_image" />
+                              <img src={`x`} alt={m.movieName} className="admin_movie_poster_image" />
                             </div>
                             <span className="admin_movie_name">{m.movieName}</span>
                           </div>
@@ -259,7 +259,7 @@ export default function AdminPanel() {
                         <td>
                           <div className="admin_user_identity">
                             <div className="admin_user_avatar">
-                              <img src={`/uploads/profiles/${u.userId}.jpg`} alt={u.username}
+                              <img src={`x`} alt={u.username}
                                 onError={e => e.target.style.display = 'none'} />
                             </div>
                             <span className="admin_user_name">{u.username}</span>

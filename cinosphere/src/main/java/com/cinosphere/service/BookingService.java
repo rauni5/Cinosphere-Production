@@ -226,10 +226,10 @@ public class BookingService {
                     membership.getTotalLoyaltyPoints() + pointsEarned);
             membershipRepository.save(membership);
         }
+
         // 12. build response DTO
         MovieModel movie   = movieRepository.findById(showtime.getMovieId()).orElse(null);
         TheatreModel theatre = theatreRepository.findById(screen.getTheatreId()).orElse(null);
-
 
         BookingResponse response = new BookingResponse();
         response.setBookingId(booking.getBookingId());
@@ -248,6 +248,65 @@ public class BookingService {
         response.setTickets(ticketInfos);
 
         return response;
+    }
+
+    // ---- methods used by BookingController ----
+
+    /**
+     * Returns bookings for the currently authenticated user, resolved by username.
+     * BookingController calls this so it never needs to resolve userId itself.
+     */
+    public List<BookingModel> getBookingsByUsername(int username) {
+        UsersModel user = userRepository.findById(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return bookingRepository.findByUserId(user.getUserId());
+    }
+
+    /**
+     * Converts a BookingModel to a BookingResponse DTO by joining showtime,
+     * movie, screen, theatre, and ticket data.
+     * Used by BookingController.getMyBookings() to enrich the booking list.
+     */
+    public BookingResponse toResponse(BookingModel booking) {
+        BookingResponse res = new BookingResponse();
+        res.setBookingId(booking.getBookingId());
+        res.setBookingDate(booking.getBookingDate());
+        res.setBookingTime(booking.getBookingTime());
+        res.setBookingStatus(booking.getBookingStatus());
+        res.setTotalAmount(booking.getTotalAmount());
+        res.setLoyaltyPointsEarned(booking.getLoyaltyPointsEarned());
+
+        // Enrich from the first ticket's showtime
+        ticketRepository.findByBookingId(booking.getBookingId())
+                .stream().findFirst().ifPresent(ticket -> {
+                    res.setShowtimeId(ticket.getShowtimeId());
+                    showtimeRepository.findById(ticket.getShowtimeId()).ifPresent(st -> {
+                        res.setShowDate(st.getShowDate());
+                        res.setStartTime(st.getStartTime());
+                        movieRepository.findById(st.getMovieId())
+                                .ifPresent(m -> res.setMovieName(m.getMovieName()));
+                        screenRepository.findById(st.getScreenId()).ifPresent(sc -> {
+                            res.setScreenName(sc.getScreenName());
+                            theatreRepository.findById(sc.getTheatreId())
+                                    .ifPresent(th -> res.setTheatreCity(th.getCity()));
+                        });
+                    });
+
+                    // Ticket list
+                    List<BookingResponse.TicketInfo> tickets = ticketRepository
+                            .findByBookingId(booking.getBookingId()).stream().map(t -> {
+                                BookingResponse.TicketInfo info = new BookingResponse.TicketInfo();
+                                info.setTicketId(t.getTicketId());
+                                info.setSeatType(t.getTicketType());
+                                info.setPrice(t.getTicketPrice().doubleValue());
+                                seatRepository.findById(t.getSeatId()).ifPresent(s ->
+                                        info.setSeatLabel(s.getRowNumber() + String.valueOf(s.getSeatNumber())));
+                                return info;
+                            }).toList();
+                    res.setTickets(tickets);
+                });
+
+        return res;
     }
 
     // ---- private helpers ----

@@ -34,11 +34,15 @@ export default function UpdateMovie({ mode }) {
       api.get('/api/screens'),
       api.get('/api/theatres'),
     ]
-    if (isEdit && id) requests.push(api.get(`/api/movies/${id}`))
+    if (isEdit && id) requests.push(
+      api.get(`/api/movies/${id}`),
+      api.get(`/api/showtimes?movieId=${id}`)
+    )
 
-    Promise.all(requests).then(([sc, th, movie]) => {
+    Promise.all(requests).then(([sc, th, movie,show]) => {
       setScreens(sc)
       setTheatres(th)
+      setShowtimes(show)
       if (movie) {
         setForm({
           movieName:     movie.movieName     ?? '',
@@ -51,8 +55,8 @@ export default function UpdateMovie({ mode }) {
           movieStatus:   movie.movieStatus   ?? '',
           ageRating:     movie.ageRating     ?? '',
         })
-        setPosterPrev(`/uploads/movies/poster_${id}.jpg`)
-        setBgPrev(`/uploads/movies/bg_${id}.jpg`)
+        setPosterPrev(`x`)
+        setBgPrev(`x`)
       }
     }).catch(() => setError('Failed to load data'))
       .finally(() => setLoading(false))

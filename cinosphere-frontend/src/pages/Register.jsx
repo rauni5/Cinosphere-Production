@@ -1,134 +1,166 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import MovieCard from '../components/MovieCard'
+import ErrorBox from '../components/ErrorBox'
 import api from '../api'
-import './css/register.css';
-export default function Home() {
-  const [movies, setMovies] = useState([])
-  const [loading, setLoading] = useState(true)
+import './css/register.css'
+const INITIAL = {
+  firstName: '', lastName: '', username: '', email: '',
+  password: '', confirmPassword: '', dateOfBirth: '', gender: '',
+}
 
-  useEffect(() => {
-    api.get('/api/movies?status=NOW_SHOWING')
-      .then(data => setMovies(Array.isArray(data) ? data.slice(0, 4) : []))
-      .catch(() => setMovies([]))
-      .finally(() => setLoading(false))
-  }, [])
+export default function Register() {
+  const navigate = useNavigate()
+  const [form,    setForm]    = useState(INITIAL)
+  const [error,   setError]   = useState('')
+  const [success, setSuccess] = useState('')
+  const [busy,    setBusy]    = useState(false)
+
+  function onChange(e) {
+    setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  }
+
+  async function onSubmit(e) {
+    e.preventDefault()
+    setError('')
+    setSuccess('')
+    if (form.password !== form.confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+    setBusy(true)
+    try {
+      await api.post('/api/auth/register', form)
+      setSuccess('Registration successful! Wait for admin approval, then sign in.')
+      setTimeout(() => navigate('/login'), 3000)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setBusy(false)
+    }
+  }
 
   return (
     <>
       <Header />
+      <main className="registration_screen">
+        <div className="authentication_layout_wrapper">
 
-      <main>
-        {/* Hero */}
-        <section className="landing_hero">
-          <div className="hero_content">
-            <div className="hero_row">
-              <div className="row"></div>
-              <span className="row_text">Nepal's First and Finest IMAX Experience</span>
-              <div className="row_bottom"></div>
-            </div>
-            <h1 className="hero_title">Cinema<br /><em>Reimagined</em></h1>
-            <p className="hero_subtitle">
-              An experience beyond cinema — Stories. Vision. Emotion. Impact.
-            </p>
-            <div className="hero_actions">
-              <Link to="/schedules" className="hero_button">
-                <span className="hero_button_text">Reserve Now</span>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Location strip */}
-        <section className="location_strip">
-          <div className="location_row">
-            <span className="row_label">Launching At Your</span>
-            <div className="row_list">
-              <div className="row_item_wrap"><span className="row_name">Kathmandu</span><span className="row_tag far">Open</span></div>
-              <div className="row_item_wrap"><span className="row_name">Pokhara</span><span className="row_tag far">Open</span></div>
-              <div className="row_item_wrap"><span className="row_name">Butwal</span><span className="row_tag soon">Opening Soon</span></div>
-            </div>
-            <span className="row_label">Nearest 3 Locations</span>
-          </div>
-        </section>
-
-        {/* Now Showing */}
-        <section className="movie_display_section">
-          <div className="movie_decorative_accent_line line_top"></div>
-          <div className="movie_main_content_container">
-            <div className="movie_section_header_container centered_layout">
-              <h2 className="section_display_title">On<em> Screen Now</em></h2>
-            </div>
-            <div className="movie_category_navigation_bar">
-              <div className="movie_category_tab_switcher">
-                <button className="movie_category_tab_button active_tab">Now Showing</button>
-              </div>
-              <Link to="/movies" className="movie_navigation_link_all">
-                View All Films →
-              </Link>
-            </div>
-            <div className="movie_cards_presentation_grid">
-              {loading
-                ? <p style={{ color: 'var(--text-muted)', padding: '2rem' }}>Loading…</p>
-                : movies.map(m => <MovieCard key={m.movieId} movie={m} />)
-              }
-            </div>
-          </div>
-        </section>
-
-        {/* Features strip */}
-        <section className="features_strip">
-          <div className="strip_content">
-            <div className="strip_label_wrap">
-              <div className="strip_line"></div>
-              <span className="strip_label">Why CinoSphere?</span>
-              <div className="strip_line"></div>
-            </div>
-            <h2 className="strip_title">Cinematic Experience <em>Beyond Extraordinary</em></h2>
-          </div>
-        </section>
-
-        {/* Screen details */}
-        <section className="screen_details">
-          <div className="details_grid">
-            <div className="details_info">
-              <h2 className="details_title">Every Screen<em>Built for Stories.</em></h2>
-              <p className="details_description">A geometry that dissolves cinematic reality. Built for Detail. Emotion. Impact.</p>
-              <div className="details_stats">
-                <div className="stat_item"><span className="stat_value">18K</span><span className="stat_label">sq. Ft. Screen</span></div>
-                <div className="stat_item"><span className="stat_value">350+</span><span className="stat_label">Seats</span></div>
-                <div className="stat_item"><span className="stat_value">44k</span><span className="stat_label">Audio</span></div>
-              </div>
-            </div>
-            <div className="details_visual">
-              <div className="visual_screen_img" style={{ background: '#1a1a2e', height: '320px', borderRadius: '8px' }}></div>
-            </div>
-          </div>
-        </section>
-
-        {/* Newsletter */}
-        <section className="newsletter_subscription_section" id="s-newsletter">
-          <div className="newsletter_accent_line line_top"></div>
-          <div className="newsletter_content_container centered_layout">
-            <div className="newsletter_column_registration">
-              <h2 className="section_display_title">Behind the<em> Curtains</em></h2>
-              <p className="newsletter_informative_text">
-                Get exclusive early access to premieres, exclusive member offers, weekly film highlights and behind the scenes stories.
-              </p>
-              <div className="newsletter_interaction_form">
-                <div className="newsletter_input_field_wrapper">
-                  <input type="email" className="newsletter_input_element" placeholder="aditya@gmail.com" />
+          {/* Left visual */}
+          <div className="authentication_left_column">
+            <div className="authentication_background_overlay"></div>
+            <div className="authentication_body_content">
+              <div className="registration_information_block">
+                <h2 className="authentication_hero_headline">Become a<br /><em>Sphere Member</em></h2>
+                <p className="authentication_hero_body">
+                  Join the Sphere circle to experience priority bookings, exclusive member rewards &amp; unforgettable premiere nights.
+                </p>
+                <div className="authentication_feature_list">
+                  <div className="authentication_feature_item"><div className="authentication_feature_dot"></div><span className="authentication_feature_text">Exclusive member rewards &amp; special screenings</span></div>
+                  <div className="authentication_feature_item"><div className="authentication_feature_dot"></div><span className="authentication_feature_text">NPR 500 welcome credit on signup</span></div>
+                  <div className="authentication_feature_item"><div className="authentication_feature_dot"></div><span className="authentication_feature_text">Early access to premiere tickets</span></div>
+                  <div className="authentication_feature_item"><div className="authentication_feature_dot"></div><span className="authentication_feature_text">Earn points on every booking</span></div>
                 </div>
-                <button className="newsletter_submit_button">Subscribe</button>
               </div>
             </div>
           </div>
-          <div className="newsletter_accent_line line_bottom"></div>
-        </section>
-      </main>
 
+          {/* Right form */}
+          <div className="authentication_right_section">
+            <div className="authentication_panel_container">
+              <div className="registration_header_area">
+                <h2 className="authentication_panel_title">Create <em>Account</em></h2>
+                <p className="authentication_panel_subtitle">Join CinoSphere — Enter your details to get started</p>
+              </div>
+
+              <div className="glass_panel_container">
+                <ErrorBox message={error} />
+                {success && <div className="success_box">{success}</div>}
+
+                <form onSubmit={onSubmit}>
+                  <div className="form_row_double">
+                    <div className="form_group_wrapper">
+                      <label className="form_label_text">First Name</label>
+                      <input type="text" name="firstName" className="form_input_field"
+                        placeholder="Aditya" value={form.firstName} onChange={onChange} required />
+                    </div>
+                    <div className="form_group_wrapper">
+                      <label className="form_label_text">Last Name</label>
+                      <input type="text" name="lastName" className="form_input_field"
+                        placeholder="Raut" value={form.lastName} onChange={onChange} required />
+                    </div>
+                  </div>
+
+                  <div className="form_row_double">
+                    <div className="form_group_wrapper">
+                      <label className="form_label_text">Username</label>
+                      <div className="form_input_wrapper">
+                        <input type="text" name="username" className="form_input_field"
+                          placeholder="adir" value={form.username} onChange={onChange} required />
+                        <span className="form_input_icon">👤</span>
+                      </div>
+                    </div>
+                    <div className="form_group_wrapper">
+                      <label className="form_label_text">Email Address</label>
+                      <div className="form_input_wrapper">
+                        <input type="email" name="email" className="form_input_field"
+                          placeholder="aditya@gmail.com" value={form.email} onChange={onChange} required />
+                        <span className="form_input_icon">✉</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="form_row_double">
+                    <div className="form_group_wrapper">
+                      <label className="form_label_text">Gender</label>
+                      <select name="gender" className="form_select_field" value={form.gender} onChange={onChange} required>
+                        <option value="" disabled>Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div className="form_group_wrapper">
+                      <label className="form_label_text">Date of Birth</label>
+                      <input type="date" name="dateOfBirth" className="form_input_field"
+                        value={form.dateOfBirth} onChange={onChange} required />
+                    </div>
+                  </div>
+
+                  <div className="form_row_double">
+                    <div className="form_group_wrapper">
+                      <label className="form_label_text">Password</label>
+                      <div className="form_input_wrapper">
+                        <input type="password" name="password" className="form_input_field"
+                          placeholder="••••••••" value={form.password} onChange={onChange} required />
+                        <span className="form_input_icon">🔒</span>
+                      </div>
+                    </div>
+                    <div className="form_group_wrapper">
+                      <label className="form_label_text">Confirm</label>
+                      <div className="form_input_wrapper">
+                        <input type="password" name="confirmPassword" className="form_input_field"
+                          placeholder="••••••••" value={form.confirmPassword} onChange={onChange} required />
+                        <span className="form_input_icon">✔</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button type="submit" className="primary_form_button_gold" disabled={busy}>
+                    {busy ? 'Creating account…' : 'Get Started'}
+                  </button>
+                </form>
+
+                <p className="authentication_switch_text">
+                  Already have an account? <Link to="/login">Sign in</Link>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
       <Footer />
     </>
   )

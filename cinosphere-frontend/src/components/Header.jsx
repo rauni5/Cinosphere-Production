@@ -27,9 +27,14 @@ export default function Header() {
 
         <div className="navigation_actions">
           {!user ? (
+            <div className="navigation_user_group">
             <Link to="/login" className="button outline_button">
               <span className="button_text">Sign In</span>
             </Link>
+            <Link to="/register" className="button outline_button">
+              <span className="button_text">Sign up</span>
+            </Link>
+            </div>
           ) : (
             <div className="navigation_user_group">
               {user.userRole === 'ADMIN'? (

@@ -131,7 +131,7 @@ export default function Booking() {
           {/* Movie info card */}
           <div className="movie_card">
             <div className="movie_card_poster">
-              <img src={`/uploads/movies/poster_${movieId}.jpg`} alt={movie?.movieName} className="movie_poster_image" />
+              <img src={`/x`} alt={movie?.movieName} className="movie_poster_image" />
             </div>
             <div className="movie_card_information">
               <div className="movie_card_title">{movie?.movieName}</div>
