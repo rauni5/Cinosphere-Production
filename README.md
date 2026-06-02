@@ -1,73 +1,107 @@
-# Cinosphere - Cinema Management System
+# Cinosphere - Cinema Management System (Modern Version)
 
 ## Overview
 
-Cinosphere is a cinema management web application developed using Java Enterprise technologies. The system provides functionality for managing movies, screenings, bookings, users, and cinema operations through a web-based interface.
+Cinosphere is a modern cinema management system built using **Spring Boot (REST API)** and **React.js** for the frontend. It is an upgraded evolution of the original Java Servlet-based application, redesigned with a scalable, API-driven architecture.
 
-This project was originally developed as a university coursework project and is being further enhanced as an independent production-focused version.
-original repository : [Visit Repo](https://github.com/Adii-r/Advance-Java-Coursework)
+This version focuses on separation of concerns, improved performance, and a more responsive user experience through a modern frontend-backend decoupled system.
+
+Original legacy version:  
+[Legacy](https://github.com/rauni5/Cinosphere-Production/tree/legacy-servlet) (Servlet + Tomcat version)
+
+Legacy coursework reference:  
+[Original-Repo](https://github.com/Adii-r/Advance-Java-Coursework)
+
+---
+
 ## Features
 
-* User authentication and authorization
-* Movie management
-* Cinema scheduling
-* Ticket booking system
-* Customer management
-* Database integration
-* Dynamic JSP pages
-* MVC-based architecture
+- User authentication & role-based access control
+- Movie management system (CRUD operations)
+- Cinema scheduling and showtime management
+- Online ticket booking system
+- Seat selection and availability tracking
+- Customer profile management
+- Admin dashboard for system control
+- RESTful API architecture
+- Responsive and dynamic frontend UI
+
+---
 
 ## Technologies Used
 
 ### Backend
 
-* Java
-* Servlets
-* JSP
-* Maven
+- Java 17+
+- Spring Boot
+- Spring Web (REST API)
+- Spring Data JPA
+- Hibernate
+- Maven
+- JWT Authentication (if implemented)
 
 ### Frontend
 
-* HTML
-* CSS
+- React.js
+- JavaScript
+- HTML / CSS
+- Axios (API communication)
+- React Router
 
 ### Database
 
-* MySQL
+- MySQL
 
-### Server
+### Server / Deployment
 
-* Apache Tomcat
+- Embedded Tomcat (Spring Boot)
+- Docker
+
+---
 
 ## Architecture
 
-The application follows the MVC (Model-View-Controller) design pattern:
+This system follows a **modern layered architecture** with clear separation between frontend and backend:
 
-* Model: Handles business logic and database operations
-* View: JSP pages for user interaction
-* Controller: Java Servlets processing requests and responses
+### Backend (Spring Boot API)
+- Controller Layer → Handles HTTP requests (REST endpoints)
+- Service Layer → Business logic
+- Repository Layer → Database interaction (JPA/Hibernate)
+- Model Layer → Entity definitions
+
+### Frontend (React SPA)
+- Component-based UI
+- State management for dynamic data
+- API integration via Axios
+- Client-side routing
+
+### Communication
+- RESTful API (JSON-based communication between frontend and backend)
+
+---
 
 ## Learning Outcomes
 
-Through this project I gained experience in:
+Through this modern rewrite, I gained experience in:
 
-* Enterprise Java development
-* MVC architecture
-* Database design and SQL
-* Session management
-* Web application development
-* Team collaboration using Git
+- Building RESTful APIs using Spring Boot
+- Designing scalable backend architecture
+- React.js component-based development
+- API integration between frontend and backend
+- Authentication and authorization concepts (JWT / session-based)
+- Migrating from monolithic MVC to decoupled architecture
+- Improving code maintainability and modular design
 
-## Future Improvements
+---
 
-* REST API implementation
-* Spring Boot migration
-* Docker deployment
-* Automated testing
-* Enhanced security
-* Responsive user interface
+## Migration Note
+
+This project is a **complete architectural migration** from a monolithic Servlet-based system to a modern **REST + SPA architecture**.  
+Both versions are maintained separately for learning, comparison, and portfolio purposes.
+
+---
 
 ## Author
 
-Raunit Giri
+Raunit Giri  
 BSc (Hons) Computing Student
