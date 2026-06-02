@@ -19,7 +19,6 @@ async function request(method, endpoint, body, isForm = false) {
   })
 
   const data = await res.json()
-  console.log(data)
   if (!res.ok) throw new Error(data.message || `HTTP ${res.status}`)
   // Unwrap ApiResponse envelope when present
   return data.data !== undefined ? data.data : data
