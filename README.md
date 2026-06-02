@@ -1,7 +1,7 @@
 # Cinosphere - Cinema Management System
 
 ## Overview
-
+legacy (Servlet + Tomcat)
 Cinosphere is a cinema management web application developed using Java Enterprise technologies. The system provides functionality for managing movies, screenings, bookings, users, and cinema operations through a web-based interface.
 
 This project was originally developed as a university coursework project and is being further enhanced as an independent production-focused version.
